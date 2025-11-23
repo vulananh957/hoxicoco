@@ -1,0 +1,55 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // ===================================
+    // HOXICOCO - STORAGE SECURITY RULES
+    // Quy tắc bảo mật File/Ảnh
+    // ===================================
+    
+    // Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isValidImageSize() {
+      // Giới hạn file ảnh tối đa 5MB
+      return request.resource.size <= 5 * 1024 * 1024;
+    }
+    
+    function isValidImageType() {
+      // Chỉ chấp nhận ảnh định dạng: jpg, jpeg, png, webp
+      return request.resource.contentType.matches('image/(jpeg|jpg|png|webp)');
+    }
+    
+    // Toilet Images (Ảnh nhà vệ sinh)
+    match /toilet-images/{userId}/{imageId} {
+      // Ai cũng đọc được ảnh đã upload
+      allow read: if true;
+      
+      // Chỉ user đăng nhập mới upload được
+      // Phải đúng định dạng và kích thước
+      allow create: if isSignedIn() && 
+                       request.auth.uid == userId &&
+                       isValidImageType() &&
+                       isValidImageSize();
+      
+      // Chỉ chủ sở hữu mới xóa được
+      allow delete: if isSignedIn() && request.auth.uid == userId;
+    }
+    
+    // User Avatars (Ảnh đại diện)
+    match /avatars/{userId} {
+      allow read: if true;
+      allow write: if isSignedIn() && 
+                      request.auth.uid == userId &&
+                      isValidImageType() &&
+                      isValidImageSize();
+    }
+    
+    // Mặc định: Từ chối tất cả
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

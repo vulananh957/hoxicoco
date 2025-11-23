@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Hoxicoco</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="../assets/global.css">
+  
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--bg-primary-alt) 0%, var(--bg-secondary) 100%);
+    }
+    
+    .login-card {
+      background-color: white;
+      padding: var(--spacing-2xl);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-strong);
+      max-width: 400px;
+      width: 90%;
+    }
+    
+    .login-card__header {
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .login-card__title {
+      color: var(--text-main);
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .form-group {
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: var(--spacing-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-main);
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: var(--spacing-md);
+      border: 2px solid var(--bg-secondary);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      transition: border-color var(--transition-fast);
+    }
+    
+    .form-group input:focus {
+      border-color: var(--color-primary);
+      outline: none;
+    }
+    
+    .btn-login {
+      width: 100%;
+      padding: var(--spacing-md);
+      background-color: var(--color-primary);
+      color: white;
+      font-weight: var(--font-weight-semibold);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .btn-login:hover {
+      background-color: var(--color-secondary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-card__header">
+      <h1 class="login-card__title">🔒 Admin Login</h1>
+      <p style="color: var(--text-body);">Hoxicoco Admin Portal</p>
+    </div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input 
+          type="email" 
+          id="email" 
+          placeholder="admin@hoxicoco.com"
+          required
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Mật khẩu:</label>
+        <input 
+          type="password" 
+          id="password" 
+          placeholder="••••••••"
+          required
+        >
+      </div>
+      
+      <button type="submit" class="btn-login">Đăng nhập</button>
+    </form>
+    
+    <p style="text-align: center; margin-top: var(--spacing-lg); color: var(--text-body); font-size: var(--font-size-sm);">
+      Chỉ dành cho quản trị viên
+    </p>
+  </div>
+  
+  <script type="module">
+    // TODO: Implement Firebase Auth for Admin
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      console.log('🔐 Admin login attempt...');
+      
+      // TODO: Xác thực admin
+      // TODO: Kiểm tra role trong Firestore
+      // TODO: Redirect to dashboard
+    });
+  </script>
+</body>
+</html>

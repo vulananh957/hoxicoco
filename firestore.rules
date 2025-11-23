@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===================================
+    // HOXICOCO - FIRESTORE SECURITY RULES
+    // Quy tắc bảo mật Database
+    // ===================================
+    
+    // Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Users Collection
+    match /users/{userId} {
+      // Chỉ user đó hoặc admin mới đọc được thông tin cá nhân
+      allow read: if isSignedIn() && (isOwner(userId) || isAdmin());
+      // Chỉ user đó mới cập nhật được thông tin của mình
+      allow update: if isSignedIn() && isOwner(userId);
+      // Không cho phép xóa user từ client
+      allow delete: if false;
+    }
+    
+    // Toilets Collection (Thông tin nhà vệ sinh)
+    match /toilets/{toiletId} {
+      // Ai cũng đọc được thông tin nhà vệ sinh
+      allow read: if true;
+      // Chỉ user đã đăng nhập mới tạo được
+      allow create: if isSignedIn();
+      // Chỉ admin hoặc người tạo mới sửa được
+      allow update: if isSignedIn() && (isAdmin() || isOwner(resource.data.createdBy));
+      // Chỉ admin mới xóa được
+      allow delete: if isAdmin();
+    }
+    
+    // Reports Collection (Báo cáo/Đánh giá)
+    match /reports/{reportId} {
+      // Ai cũng đọc được báo cáo đã duyệt
+      allow read: if resource.data.status == 'approved';
+      // User đăng nhập mới tạo báo cáo được
+      allow create: if isSignedIn();
+      // Chỉ admin mới được duyệt/từ chối
+      allow update: if isAdmin();
+      // Chỉ admin mới xóa được
+      allow delete: if isAdmin();
+    }
+    
+    // Mặc định: Từ chối tất cả các request khác
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

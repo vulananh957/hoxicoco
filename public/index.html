@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hoxicoco - Bản đồ vệ sinh công cộng thông minh. Vì một đô thị văn minh.">
+  <meta name="keywords" content="nhà vệ sinh công cộng, bản đồ toilet, vệ sinh, Hoxicoco">
+  <meta name="author" content="Hoxicoco Team">
+  
+  <title>Hoxicoco - Bản đồ vệ sinh công cộng thông minh</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="assets/global.css">
+  
+  <!-- Landing Page CSS -->
+  <style>
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bg-primary-alt) 0%, var(--bg-secondary) 100%);
+      padding: var(--spacing-2xl) var(--spacing-md);
+      text-align: center;
+    }
+    
+    .hero__title {
+      font-size: 3.5rem;
+      color: var(--text-main);
+      margin-bottom: var(--spacing-lg);
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .hero__subtitle {
+      font-size: var(--font-size-xl);
+      color: var(--text-body);
+      margin-bottom: var(--spacing-2xl);
+      animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    }
+    
+    .hero__cta {
+      display: inline-block;
+      padding: var(--spacing-md) var(--spacing-xl);
+      background-color: var(--color-primary);
+      color: white;
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      transition: all var(--transition-base);
+      animation: fadeInUp 0.8s ease-out 0.4s backwards;
+    }
+    
+    .hero__cta:hover {
+      background-color: var(--color-secondary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Features Section */
+    .features {
+      padding: var(--spacing-2xl) var(--spacing-md);
+      background-color: var(--bg-primary);
+    }
+    
+    .features__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--spacing-xl);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .feature-card {
+      padding: var(--spacing-xl);
+      background-color: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      transition: transform var(--transition-base);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-medium);
+    }
+    
+    .feature-card__icon {
+      font-size: 3rem;
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .feature-card__title {
+      color: var(--text-main);
+      margin-bottom: var(--spacing-sm);
+    }
+  </style>
+</head>
+<body>
+  <!-- LANDING PAGE - Trang giới thiệu dự án -->
+  
+  <section class="hero">
+    <h1 class="hero__title">🚻 Hoxicoco</h1>
+    <p class="hero__subtitle">
+      Bản đồ vệ sinh công cộng thông minh<br>
+      Vì một đô thị văn minh
+    </p>
+    <a href="app/index.html" class="hero__cta">
+      Khám phá bản đồ →
+    </a>
+  </section>
+  
+  <section class="features">
+    <div class="features__grid">
+      <div class="feature-card">
+        <div class="feature-card__icon">🗺️</div>
+        <h3 class="feature-card__title">Bản đồ thông minh</h3>
+        <p>Tìm kiếm nhà vệ sinh công cộng gần nhất chỉ trong vài giây</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-card__icon">⭐</div>
+        <h3 class="feature-card__title">Đánh giá tin cậy</h3>
+        <p>Xem điểm sạch sẽ thực tế từ cộng đồng người dùng</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-card__icon">📸</div>
+        <h3 class="feature-card__title">Báo cáo nhanh</h3>
+        <p>Đóng góp thông tin và hình ảnh để giúp cộng đồng</p>
+      </div>
+    </div>
+  </section>
+  
+  <footer style="text-align: center; padding: var(--spacing-xl); background-color: var(--bg-primary-alt);">
+    <p style="color: var(--text-body);">
+      © 2025 Hoxicoco Team. Made with 💙 for a cleaner city.
+    </p>
+  </footer>
+</body>
+</html>
