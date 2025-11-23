@@ -1,9 +1,9 @@
-# 🚻 HOSICOCO - Smart Public Toilet Map
+# 🚻 HOXICOCO - Smart Public Toilet Map
 
 ## 📁 CẤU TRÚC DỰ ÁN (Modular Architecture)
 
 ```
-HOSICOCO-PROJECT/
+HOXICOCO-PROJECT/
 │
 ├── functions/                          # 🔒 BACKEND (Serverless Logic)
 │   ├── index.js                        # Entry point - Export tất cả Cloud Functions
@@ -135,5 +135,6 @@ firebase deploy --only firestore:rules,storage:rules
 
 ---
 
-© 2025 Hosicoco Team. Made with 💙 for a cleaner city.
+© 2025 Hoxicoco Team. Made with 💙 for a cleaner city.
+# hoxicoco
 # hoxicoco
