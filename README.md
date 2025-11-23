@@ -1,153 +1,139 @@
 # 🚻 HOSICOCO - Smart Public Toilet Map
 
-**Bản đồ vệ sinh công cộng thông minh cho Việt Nam**
+## 📁 CẤU TRÚC DỰ ÁN (Modular Architecture)
 
-*Minh bạch - Tiện lợi - Văn minh - Sạch sẽ*
+```
+HOSICOCO-PROJECT/
+│
+├── functions/                          # 🔒 BACKEND (Serverless Logic)
+│   ├── index.js                        # Entry point - Export tất cả Cloud Functions
+│   ├── modules/                        # Logic Backend (Module hóa)
+│   │   ├── auth.js                     # Xác thực người dùng & admin
+│   │   ├── toilet-api.js               # CRUD dữ liệu nhà vệ sinh
+│   │   ├── reporting.js                # Xử lý báo cáo & duyệt bài
+│   │   └── ai-vision.js                # AI phân tích ảnh (Vision API)
+│   │
+│   ├── ai-analysis.js                  # [Legacy] AI analysis (sẽ migrate vào modules/)
+│   ├── scoring.js                      # [Legacy] CleanScore calculation
+│   └── admin-logic.js                  # [Legacy] Admin logic
+│
+├── public/                             # 🌐 FRONTEND (Client Side)
+│   │
+│   ├── assets/                         # 🎨 TÀI NGUYÊN CHUNG (Dùng chung toàn dự án)
+│   │   ├── global.css                  # Import variables.css + reset.css + utilities
+│   │   ├── variables.css               # ⭐ CSS Variables (Màu sắc, Font, Spacing)
+│   │   ├── reset.css                   # CSS Reset chuẩn
+│   │   ├── images/                     # Logo, banner
+│   │   └── icons/                      # SVG icons
+│   │
+│   ├── index.html                      # 🏠 LANDING PAGE (Trang giới thiệu)
+│   │
+│   ├── app/                            # 📱 [MODULE 1] USER WEB APP
+│   │   ├── index.html                  # Giao diện bản đồ chính
+│   │   ├── css/
+│   │   │   ├── map.css                 # Style bản đồ
+│   │   │   └── modal.css               # Style modal/popup
+│   │   ├── js/
+│   │   │   ├── map-engine.js           # Logic hiển thị bản đồ
+│   │   │   └── user-report.js          # Logic gửi báo cáo
+│   │   └── views/                      # Các view con (Load động vào modal)
+│   │       ├── profile.html            # Hồ sơ người dùng
+│   │       ├── toilet-detail.html      # Chi tiết nhà vệ sinh
+│   │       └── report-form.html        # Form báo cáo
+│   │
+│   └── admin/                          # 👨‍💼 [MODULE 2] ADMIN PORTAL
+│       ├── login.html                  # Đăng nhập Admin
+│       ├── index.html                  # Dashboard thống kê
+│       ├── css/
+│       │   └── admin.css               # Style giao diện Admin
+│       └── js/
+│           └── admin.js                # Logic quản trị (gọi API quyền cao)
+│
+├── firestore.rules                     # 🔐 Bảo mật Database
+├── storage.rules                       # 🔐 Bảo mật Storage (Ảnh)
+├── firebase.json                       # Cấu hình Firebase
+└── PROJECT_MANIFEST.md                 # Hiến pháp dự án
+```
 
 ---
 
-## 🎯 Project Overview
+## 🎯 PHÂN TÁCH MODULE RÕ RÀNG
 
-Hosicoco is a Progressive Web App (PWA) that helps people find and review public toilets in Vietnam. Built with Next.js 14, TypeScript, and Firebase, it provides a community-driven platform to improve public hygiene infrastructure.
+### 1️⃣ **Landing Page** (`public/index.html`)
+- Trang giới thiệu dự án
+- Call-to-action dẫn đến User App
 
-## 🛠 Tech Stack
+### 2️⃣ **User Web App** (`public/app/`)
+- Dành cho người dân sử dụng
+- Tính năng: Xem bản đồ, tìm kiếm WC, báo cáo, đánh giá
 
-- **Framework:** Next.js 14+ (App Router)
-- **Language:** TypeScript (Strict Mode)
-- **Styling:** Tailwind CSS + Custom Design System
-- **Map:** Mapbox GL JS
-- **Backend:** Firebase (Auth, Firestore, Storage, Hosting)
-- **State Management:** Zustand
-- **Animations:** Framer Motion
-- **Validation:** Zod
+### 3️⃣ **Admin Portal** (`public/admin/`)
+- Dành cho quản trị viên
+- Tính năng: Duyệt báo cáo, quản lý dữ liệu, thống kê
 
-## 📦 Project Structure
+### 4️⃣ **Backend Functions** (`functions/modules/`)
+- Xử lý logic nghiệp vụ (KHÔNG lộ ra Client)
+- Phân quyền chặt chẽ (User/Admin)
+
+---
+
+## 🎨 CSS ARCHITECTURE
+
+**Nguyên tắc:** Tất cả module đều import `assets/global.css`
 
 ```
-/src
-  /app                 # Next.js App Router pages
-  /components
-    /ui                # Reusable UI components (Buttons, Inputs)
-    /features          # Feature-specific components (Map, Review, Report)
-    /layout            # Layout components (Header, Footer)
-  /lib
-    /firebase          # Firebase initialization & helpers
-    /utils             # Utility functions
-    /constants         # Static configuration
-  /hooks               # Custom React Hooks
-  /types               # TypeScript type definitions
-  /services            # API service layer
-  /styles              # Global CSS
+assets/global.css
+  ├─ @import variables.css    ⭐ Màu sắc, Font, Spacing
+  ├─ @import reset.css         🧹 CSS Reset
+  └─ Global Styles + Utilities
 ```
 
-## 🚀 Getting Started
+**Lợi ích:**
+- Đồng bộ thương hiệu (Brand consistency)
+- Dễ thay đổi theme toàn dự án
+- Tránh duplicate code
 
-### Prerequisites
+---
 
-- Node.js 18+ and npm
-- Firebase project (create at [firebase.google.com](https://firebase.google.com))
-- Mapbox account (get token at [mapbox.com](https://www.mapbox.com))
+## 🔒 BẢO MẬT
 
-### Installation
+### Frontend (public/)
+✅ CHỈ hiển thị UI  
+✅ CHỈ gọi Cloud Functions  
+❌ KHÔNG chứa logic tính toán  
+❌ KHÔNG hardcode API keys
 
-1. **Clone the repository:**
-   ```bash
-   git clone <your-repo-url>
-   cd hosicoco
-   ```
+### Backend (functions/)
+✅ Xử lý TẤT CẢ logic nghiệp vụ  
+✅ Phân quyền User/Admin  
+✅ Validate dữ liệu  
+✅ Rate limiting
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+---
 
-3. **Configure environment variables:**
-   ```bash
-   cp .env.local.example .env.local
-   ```
-   
-   Edit `.env.local` and add your Firebase and Mapbox credentials.
-
-4. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open [http://localhost:3000](http://localhost:3000)** in your browser.
-
-## 🎨 Design System
-
-The project follows a strict design system defined in `PROJECT_MANIFEST.md`:
-
-### Color Palette
-
-- **Primary:** `#00B4D8` (Action buttons, active states)
-- **Secondary:** `#48CAE4` (Hover states, highlights)
-- **Deep Blue:** `#03045E` (Headings, main text)
-- **Navy:** `#023E8A` (Sub-headings)
-- **Status Colors:**
-  - Clean: `#2ECC71`
-  - Okay: `#F1C40F`
-  - Dirty: `#E74C3C`
-
-### Typography
-
-- **Body Font:** Inter / Be Vietnam Pro
-- **Heading Font:** Nunito
-
-## 🔒 Security Standards
-
-All code must follow security best practices:
-
-- ✅ Firestore Security Rules (deny by default)
-- ✅ Input validation with Zod
-- ✅ XSS protection (sanitize user content)
-- ✅ No hardcoded API keys (environment variables only)
-- ✅ GDPR/Privacy compliance
-
-## 📝 Development Guidelines
-
-### Code Style
-
-- Use **Clean Code** principles
-- Meaningful variable/function names
-- Comment "why", not "what"
-- Follow **Conventional Commits** (e.g., `feat: add map markers`)
-
-### TypeScript
-
-- Strict mode enabled
-- No `any` types (use proper typing)
-- Leverage path aliases (`@/components`, `@/lib`)
-
-### Error Handling
-
-- Always wrap async/await in try/catch
-- Show user-friendly error messages (Toast notifications)
-- Never expose internal errors to users
-
-## 📚 Available Scripts
+## 🚀 DEPLOYMENT
 
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
+# Deploy Frontend (Hosting)
+firebase deploy --only hosting
+
+# Deploy Backend (Functions)
+firebase deploy --only functions
+
+# Deploy Security Rules
+firebase deploy --only firestore:rules,storage:rules
 ```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please read the `PROJECT_MANIFEST.md` for detailed requirements before submitting PRs.
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👤 Author
-
-Built with 💙 for the people of Vietnam.
 
 ---
 
-**Note:** This README is generated as part of the project initialization. For detailed technical specifications, see `PROJECT_MANIFEST.md`.
-# hosicoco
+## 📝 GHI CHÚ
+
+- File `variables.css` là trung tâm của Design System
+- Mọi màu sắc PHẢI dùng `var(--...)`
+- Backend modules phải export functions rõ ràng
+- Admin Portal có style riêng (nghiêm túc hơn User App)
+
+---
+
+© 2025 Hosicoco Team. Made with 💙 for a cleaner city.
+# hoxicoco
