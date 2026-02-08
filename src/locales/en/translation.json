@@ -1,0 +1,207 @@
+{
+  "common": {
+    "search": "Find toilets, areas...",
+    "login": "Login",
+    "logout": "Logout",
+    "guest": "Guest",
+    "user": "User",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "close": "Close",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "linkCopied": "Link copied!"
+  },
+  "header": {
+    "searchPlaceholder": "Find toilets, areas..."
+  },
+  "filters": {
+    "radius": "Radius",
+    "gender": "Gender",
+    "genderAll": "Gender",
+    "genderSeparated": "Separated",
+    "genderUnisex": "Unisex",
+    "freeOnly": "Free",
+    "accessibility": "Accessible",
+    "paper": "Paper",
+    "bidet": "Bidet"
+  },
+  "auth": {
+    "welcome": "Welcome!",
+    "loginToUse": "Login to use all features",
+    "loginWithGoogle": "Login with Google",
+    "loginRequired": "Login to contribute",
+    "loginRequiredDesc": "You need to login to add new locations",
+    "terms": "By logging in, you agree to our",
+    "termsLink": "Terms of Service",
+    "termsOfUs": "",
+    "benefits": {
+      "review": "Rate and review locations",
+      "contribute": "Add new locations",
+      "report": "Report issues quickly"
+    }
+  },
+  "menu": {
+    "language": "Language",
+    "entertainment": "Entertainment",
+    "utilities": "Utilities",
+    "account": "Account",
+    "share": "Share app",
+    "feedback": "Feedback",
+    "support": "Contact support",
+    "logout": "Logout",
+    "loginPrompt": "Login to use all features"
+  },
+  "game": {
+    "title": "Toilet Rush",
+    "highScore": "High score",
+    "score": "Score",
+    "start": "Start",
+    "playAgain": "Play again",
+    "gameOver": "Game Over!",
+    "newRecord": "New record!",
+    "instructions1": "Move the toilet to catch 💩 and ⭐",
+    "instructions2": "Avoid 🧻 toilet paper!"
+  },
+  "nav": {
+    "map": "Map",
+    "add": "Add",
+    "community": "Community"
+  },
+  "toilet": {
+    "directions": "Directions",
+    "report": "Report",
+    "share": "Share",
+    "reviews": "Reviews",
+    "writeReview": "Write a review",
+    "noReviews": "No reviews yet",
+    "beFirst": "Be the first to review!",
+    "free": "Free",
+    "paid": "Paid",
+    "open": "Open",
+    "closed": "Closed",
+    "distance": "Distance",
+    "rating": "Rating",
+    "statusActive": "Active",
+    "statusDanger": "WARNING",
+    "statusMaintenance": "Maintenance",
+    "statusPending": "Pending",
+    "soap": "Soap",
+    "mirror": "Mirror",
+    "dryer": "Hand dryer",
+    "baby": "Baby changing table",
+    "images": "Location photos"
+  },
+  "addToilet": {
+    "title": "Add toilet",
+    "name": "Location name",
+    "address": "Address",
+    "type": "Type",
+    "price": "Price",
+    "amenities": "Amenities",
+    "submit": "Submit",
+    "success": "Submitted! Waiting for admin approval."
+  },
+  "navigation": {
+    "start": "Starting navigation!",
+    "arrived": "🎉 You have arrived!",
+    "noRoute": "Could not find a route",
+    "cancel": "Cancel navigation",
+    "upcomingSteps": "Next steps",
+    "toTurn": "to turn",
+    "remaining": "remaining",
+    "time": "time",
+    "directions": {
+      "depart": "Depart",
+      "arrive": "You have arrived",
+      "turnLeft": "Turn left",
+      "turnRight": "Turn right",
+      "slightLeft": "Slight left",
+      "slightRight": "Slight right",
+      "sharpLeft": "Sharp left",
+      "sharpRight": "Sharp right",
+      "uturn": "Make a U-turn",
+      "straight": "Continue straight",
+      "roundabout": "Enter roundabout",
+      "merge": "Merge",
+      "fork": "Fork",
+      "continue": "Continue",
+      "into": "onto"
+    }
+  },
+  "report": {
+    "title": "Report issue",
+    "loginRequired": "Please login to report!",
+    "success": "Report submitted! Thank you for your contribution.",
+    "error": "An error occurred, please try again!",
+    "badReport": "Report",
+    "warning": "Your report will be sent to administrators for review. Reports about hidden cameras or harassment will be prioritized.",
+    "issueType": "Issue type",
+    "describeIssue": "Please describe the issue!",
+    "describeIssueLabel": "Describe issue",
+    "describePlaceholder": "E.g.: Door won't close, No water...",
+    "detailOptional": "Details (optional)",
+    "detailPlaceholder": "Describe more about the issue...",
+    "submitReport": "Submit report",
+    "otherIssue": "Other issue",
+    "loginToReport": "Please login to report",
+    "types": {
+      "dirty": "Dirty / Smelly",
+      "broken": "Broken / Not working",
+      "noPaper": "No paper / soap",
+      "camera": "⚠️ Hidden camera",
+      "harassment": "⚠️ Harassment / Danger",
+      "other": "Other issue"
+    }
+  },
+  "review": {
+    "comments": "Comments",
+    "loginRequired": "Please login to review!",
+    "enterComment": "Please enter a comment!",
+    "loginToReview": "Please login to review",
+    "clickAvatar": "Click on the avatar in the top right corner",
+    "yourRating": "Your rating",
+    "rating1": "Very bad",
+    "rating2": "Bad",
+    "rating3": "Average",
+    "rating4": "Good",
+    "rating5": "Very good",
+    "yourComment": "Your comment",
+    "sharePlaceholder": "Share your experience about this toilet...",
+    "mediaOptional": "Photos / Videos (optional)",
+    "mediaLimit": "Max 3 files. Images ≤ 5MB, Videos ≤ 20MB",
+    "add": "Add",
+    "sending": "Sending...",
+    "submitReview": "Submit review",
+    "reviewImages": "Review photos",
+    "maxFiles": "Maximum {{count}} files!",
+    "onlyImageVideo": "Only images and videos supported!",
+    "imageTooLarge": "Image must be under 5MB!",
+    "videoTooLarge": "Video must be under 20MB!"
+  },
+  "admin": {
+    "title": "Hello Admin!",
+    "prompt": "Would you like to go to admin panel or continue using the app?",
+    "useApp": "Use App",
+    "goAdmin": "Go to Admin"
+  },
+  "community": {
+    "like": "Like",
+    "comment": "Comment", 
+    "share": "Share",
+    "likes": "likes",
+    "comments": "comments",
+    "title": "Community",
+    "developing": "Feature under development..."
+  },
+  "appInfo": {
+    "title": "Hoxicoco - Find Toilets",
+    "description": "The convenient public toilet finder app!",
+    "version": "Hoxicoco v1.0.0",
+    "madeBy": "Made by AL²LA x Đất Mầm"
+  }
+}
+

@@ -1,0 +1,208 @@
+{
+  "common": {
+    "search": "Tìm nhà vệ sinh, khu vực...",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "guest": "Khách",
+    "user": "Người dùng",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "save": "Lưu",
+    "close": "Đóng",
+    "back": "Quay lại",
+    "loading": "Đang tải...",
+    "error": "Có lỗi xảy ra",
+    "success": "Thành công",
+    "linkCopied": "Đã sao chép link!"
+  },
+  "header": {
+    "searchPlaceholder": "Tìm nhà vệ sinh, khu vực..."
+  },
+  "filters": {
+    "radius": "Bán kính",
+    "gender": "Giới tính",
+    "genderAll": "Giới tính",
+    "genderSeparated": "Phân chia",
+    "genderUnisex": "Chung",
+    "freeOnly": "Miễn phí",
+    "accessibility": "Cho NKT",
+    "paper": "Giấy",
+    "bidet": "Vòi xịt",
+    "sink": "Bồn rửa tay"
+  },
+  "auth": {
+    "welcome": "Chào mừng bạn!",
+    "loginToUse": "Đăng nhập để sử dụng đầy đủ tính năng",
+    "loginWithGoogle": "Đăng nhập với Google",
+    "loginRequired": "Đăng nhập để đóng góp",
+    "loginRequiredDesc": "Bạn cần đăng nhập để thêm địa điểm mới",
+    "terms": "Bằng việc đăng nhập, bạn đồng ý với",
+    "termsLink": "Điều khoản sử dụng",
+    "termsOfUs": "của chúng tôi",
+    "benefits": {
+      "review": "Đánh giá và nhận xét địa điểm",
+      "contribute": "Đóng góp địa điểm mới",
+      "report": "Báo cáo vấn đề nhanh chóng"
+    }
+  },
+  "menu": {
+    "language": "Ngôn ngữ",
+    "entertainment": "Giải trí",
+    "utilities": "Tiện ích",
+    "account": "Tài khoản",
+    "share": "Chia sẻ ứng dụng",
+    "feedback": "Góp ý & Phản hồi",
+    "support": "Liên hệ hỗ trợ",
+    "logout": "Đăng xuất",
+    "loginPrompt": "Đăng nhập để sử dụng đầy đủ tính năng"
+  },
+  "game": {
+    "title": "Toilet Rush",
+    "highScore": "Điểm cao",
+    "score": "Điểm",
+    "start": "Bắt đầu",
+    "playAgain": "Chơi lại",
+    "gameOver": "Game Over!",
+    "newRecord": "Kỷ lục mới!",
+    "instructions1": "Di chuyển bồn cầu để hứng 💩 và ⭐",
+    "instructions2": "Tránh 🧻 giấy vệ sinh!"
+  },
+  "nav": {
+    "map": "Bản đồ",
+    "add": "Thêm",
+    "community": "Cộng đồng"
+  },
+  "toilet": {
+    "directions": "Chỉ đường",
+    "report": "Báo cáo",
+    "share": "Chia sẻ",
+    "reviews": "Đánh giá",
+    "writeReview": "Viết đánh giá",
+    "noReviews": "Chưa có đánh giá nào",
+    "beFirst": "Hãy là người đầu tiên đánh giá!",
+    "free": "Miễn phí",
+    "paid": "Có phí",
+    "open": "Đang mở",
+    "closed": "Đã đóng",
+    "distance": "Khoảng cách",
+    "rating": "Đánh giá",
+    "statusActive": "Đang hoạt động",
+    "statusDanger": "CẢNH BÁO",
+    "statusMaintenance": "Bảo trì",
+    "statusPending": "Chờ duyệt",
+    "soap": "Xà phòng",
+    "mirror": "Gương",
+    "dryer": "Máy sấy tay",
+    "baby": "Bàn thay tã",
+    "images": "Hình ảnh địa điểm"
+  },
+  "addToilet": {
+    "title": "Thêm nhà vệ sinh",
+    "name": "Tên địa điểm",
+    "address": "Địa chỉ",
+    "type": "Loại",
+    "price": "Giá",
+    "amenities": "Tiện ích",
+    "submit": "Gửi đóng góp",
+    "success": "Đóng góp thành công! Chờ Admin duyệt."
+  },
+  "navigation": {
+    "start": "Bắt đầu dẫn đường!",
+    "arrived": "🎉 Bạn đã đến nơi!",
+    "noRoute": "Không thể tìm được đường đi",
+    "cancel": "Hủy dẫn đường",
+    "upcomingSteps": "Các bước tiếp theo",
+    "toTurn": "đến điểm rẽ",
+    "remaining": "còn lại",
+    "time": "thời gian",
+    "directions": {
+      "depart": "Xuất phát",
+      "arrive": "Bạn đã đến nơi",
+      "turnLeft": "Rẽ trái",
+      "turnRight": "Rẽ phải",
+      "slightLeft": "Chếch trái nhẹ",
+      "slightRight": "Chếch phải nhẹ",
+      "sharpLeft": "Rẽ gấp trái",
+      "sharpRight": "Rẽ gấp phải",
+      "uturn": "Quay đầu",
+      "straight": "Đi thẳng",
+      "roundabout": "Vào vòng xuyến",
+      "merge": "Nhập làn",
+      "fork": "Tách làn",
+      "continue": "Tiếp tục",
+      "into": "vào"
+    }
+  },
+  "report": {
+    "title": "Báo cáo vấn đề",
+    "loginRequired": "Vui lòng đăng nhập để báo cáo!",
+    "success": "Báo cáo đã được gửi! Cảm ơn bạn đã đóng góp.",
+    "error": "Có lỗi xảy ra, vui lòng thử lại!",
+    "badReport": "Báo xấu",
+    "warning": "Báo cáo của bạn sẽ được gửi đến quản trị viên để xử lý. Các báo cáo về camera ẩn hoặc quấy rối sẽ được ưu tiên xử lý ngay.",
+    "issueType": "Loại vấn đề",
+    "describeIssue": "Vui lòng mô tả vấn đề bạn gặp phải!",
+    "describeIssueLabel": "Mô tả vấn đề",
+    "describePlaceholder": "VD: Cửa không đóng được, Nước không chảy...",
+    "detailOptional": "Mô tả chi tiết (không bắt buộc)",
+    "detailPlaceholder": "Mô tả thêm về vấn đề bạn gặp phải...",
+    "submitReport": "Gửi báo cáo",
+    "otherIssue": "Vấn đề khác",
+    "loginToReport": "Vui lòng đăng nhập để báo cáo",
+    "types": {
+      "dirty": "Bẩn / Hôi",
+      "broken": "Hỏng / Không hoạt động",
+      "noPaper": "Hết giấy / Xà phòng",
+      "camera": "⚠️ Có camera ẩn",
+      "harassment": "⚠️ Quấy rối / Nguy hiểm",
+      "other": "Vấn đề khác"
+    }
+  },
+  "review": {
+    "comments": "Nhận xét",
+    "loginRequired": "Vui lòng đăng nhập để đánh giá!",
+    "enterComment": "Vui lòng nhập nhận xét!",
+    "loginToReview": "Vui lòng đăng nhập để đánh giá",
+    "clickAvatar": "Nhấn vào avatar ở góc phải màn hình",
+    "yourRating": "Đánh giá của bạn",
+    "rating1": "Rất tệ",
+    "rating2": "Tệ",
+    "rating3": "Bình thường",
+    "rating4": "Tốt",
+    "rating5": "Rất tốt",
+    "yourComment": "Nhận xét của bạn",
+    "sharePlaceholder": "Chia sẻ trải nghiệm của bạn về nhà vệ sinh này...",
+    "mediaOptional": "Ảnh / Video (không bắt buộc)",
+    "mediaLimit": "Tối đa 3 tệp. Ảnh ≤ 5MB, Video ≤ 20MB",
+    "add": "Thêm",
+    "sending": "Đang gửi...",
+    "submitReview": "Gửi đánh giá",
+    "reviewImages": "Hình ảnh đánh giá",
+    "maxFiles": "Tối đa {{count}} tệp!",
+    "onlyImageVideo": "Chỉ hỗ trợ ảnh và video!",
+    "imageTooLarge": "Ảnh không được vượt quá 5MB!",
+    "videoTooLarge": "Video không được vượt quá 20MB!"
+  },
+  "admin": {
+    "title": "Xin chào Admin!",
+    "prompt": "Bạn muốn vào trang quản trị hay tiếp tục dùng app?",
+    "useApp": "Dùng App",
+    "goAdmin": "Vào Admin"
+  },
+  "community": {
+    "like": "Thích",
+    "comment": "Bình luận",
+    "share": "Chia sẻ",
+    "likes": "lượt thích",
+    "comments": "bình luận",
+    "title": "Cộng đồng",
+    "developing": "Tính năng đang được phát triển..."
+  },
+  "appInfo": {
+    "title": "Hoxicoco - Tìm nhà vệ sinh",
+    "description": "Ứng dụng tìm nhà vệ sinh công cộng tiện lợi!",
+    "version": "Hoxicoco v1.0.0",
+    "madeBy": "Made by AL²LA x Đất Mầm"
+  }
+}
+

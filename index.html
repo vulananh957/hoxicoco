@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#00B4D8" />
+    <meta name="description" content="Hoxicoco - Tìm kiếm nhà vệ sinh công cộng tại Việt Nam" />
+    
+    <!-- Open Graph - Social Sharing & Search Results -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hoxicoco.com" />
+    <meta property="og:title" content="Hoxicoco - Public Hygiene Ecosystem" />
+    <meta property="og:description" content="Tìm kiếm nhà vệ sinh công cộng tại Việt Nam" />
+    <meta property="og:image" content="https://hoxicoco.com/apple-touch-icon.png" />
+    <meta property="og:site_name" content="Hoxicoco" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hoxicoco - Public Hygiene Ecosystem" />
+    <meta name="twitter:description" content="Tìm kiếm nhà vệ sinh công cộng tại Việt Nam" />
+    <meta name="twitter:image" content="https://hoxicoco.com/apple-touch-icon.png" />
+    
+    <!-- Favicon cho Desktop -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    
+    <!-- Apple Touch Icon cho iPhone/iPad -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Hoxicoco" />
+    
+    <!-- Manifest cho Android -->
+    <link rel="manifest" href="/manifest.json" />
+    <title>Hoxicoco - Public Hygiene Ecosystem</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Remix Icon (Vector Icons) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Goong JS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.css" rel="stylesheet" />
+    
+    <!-- Goong JS Script (Global Load) -->
+    <script src="https://cdn.jsdelivr.net/npm/@goongmaps/goong-js@1.0.9/dist/goong-js.js"></script>
+
+    <style>
+      body {
+        background-color: #CAF0F8;
+        color: #023E8A;
+        overflow: hidden; /* Prevent body scroll for mobile-app feel */
+      }
+      
+      /* Glassmorphism Utilities */
+      .glass {
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .glass-dark {
+        background: rgba(3, 4, 94, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      /* Hide Scrollbar but allow scroll */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Animations */
+      @keyframes slideUp {
+        from {
+          transform: translateY(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .animate-slide-up {
+        animation: slideUp 0.3s ease-out;
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 0.2s ease-out;
+      }
+
+      /* Admin Glassmorphism */
+      .glass-admin {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+
+      /* Admin Scrollbar */
+      .admin-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .admin-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .admin-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(0, 180, 216, 0.3);
+        border-radius: 3px;
+      }
+      .admin-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 180, 216, 0.5);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
