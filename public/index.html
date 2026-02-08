@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="vi">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hoxicoco - Nền Tảng Tìm Kiếm WC Sạch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #ffffff;
+      color: #0a0e27;
+      line-height: 1.6;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Premium Gradient Background */
+    .hero-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, #CAF0F8 0%, #ffffff 50%, #ADE8F4 100%);
+      z-index: -2;
+    }
+
+    .gradient-orbs {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(135deg, #90E0EF 0%, #48CAE4 100%);
+      top: -200px;
+      right: -100px;
+      animation-delay: 0s;
+      opacity: 0.3;
+    }
+
+    .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, #CAF0F8 0%, #ADE8F4 100%);
+      bottom: -150px;
+      left: -100px;
+      animation-delay: 5s;
+      opacity: 0.3;
+    }
+
+    .orb-3 {
+      width: 350px;
+      height: 350px;
+      background: linear-gradient(135deg, #00B4D8 0%, #0096C7 100%);
+      top: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      animation-delay: 10s;
+      opacity: 0.25;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -50px) scale(1.1); }
+      66% { transform: translate(-20px, 30px) scale(0.9); }
+    }
+
+    /* Modern Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(0, 119, 182, 0.1);
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      animation: slideDown 0.6s ease-out;
+      box-shadow: 0 2px 20px rgba(0, 180, 216, 0.08);
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00B4D8 0%, #48CAE4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+    }
+
+    .header-login {
+      background: transparent;
+      border: 2px solid rgba(0, 119, 182, 0.3);
+      padding: 12px 28px;
+      border-radius: 12px;
+      color: #0077B6;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .header-login:hover {
+      background: rgba(0, 119, 182, 0.1);
+      border-color: rgba(0, 119, 182, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .header-cta {
+      background: linear-gradient(135deg, #0077B6 0%, #023E8A 100%);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 119, 182, 0.4);
+    }
+
+    .header-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(0, 119, 182, 0.6);
+    }
+
+    /* Hero Section Premium */
+    .hero {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 140px 48px 80px;
+      position: relative;
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 900px;
+      animation: fadeInUp 1s ease-out;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 119, 182, 0.1);
+      border: 1px solid rgba(0, 119, 182, 0.3);
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #023E8A;
+      margin-bottom: 32px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-badge::before {
+      content: '✨';
+      font-size: 16px;
+    }
+
+    .hero-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 96px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #023E8A 0%, #0077B6 50%, #00B4D8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -4px;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    .hero-subheadline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 96px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      background: linear-gradient(135deg, #00B4D8 0%, #48CAE4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -4px;
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    .hero-description {
+      font-size: 22px;
+      color: #475569;
+      margin-bottom: 48px;
+      line-height: 1.7;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeInUp 1s ease-out 0.4s both;
+      font-weight: 400;
+    }
+
+    /* Premium Phone Mockup */
+    .phone-container {
+      position: relative;
+      margin: 64px auto 56px;
+      margin-left: auto;
+      margin-right: 20%;
+      animation: fadeInUp 1s ease-out 0.5s both;
+      perspective: 1000px;
+    }
+
+    .phone-mockup {
+      /* Kích thước cho iPhone 16 Pro Max mockup (mỏng viền) */
+      width: 400px;
+      height: 860px;
+      background: linear-gradient(180deg, #0f172a 0%, #0b1220 100%);
+      border-radius: 44px;
+      /* Thin bezel effect: subtle dual-ring with smaller stroke */
+      box-shadow:
+        0 0 0 6px rgba(10,14,39,0.95),
+        0 0 0 8px rgba(0, 180, 216, 0.12),
+        0 34px 80px -20px rgba(2,6,23,0.55),
+        0 18px 40px -20px rgba(0,119,182,0.25);
+      padding: 6px; /* inner bezel spacing */
+      position: relative;
+      transform: rotateY(-5deg) rotateX(4deg);
+      animation: floatPhone 6s ease-in-out infinite;
+      transition: transform 0.28s ease;
+    }
+
+    .phone-mockup:hover {
+      transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+    }
+
+    @keyframes floatPhone {
+      0%, 100% { transform: rotateY(-5deg) rotateX(5deg) translateY(0px); }
+      50% { transform: rotateY(-5deg) rotateX(5deg) translateY(-15px); }
+    }
+
+    .phone-notch {
+      /* giữ vùng đặt dynamic island (ẩn nền để island nổi) */
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 56px;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .dynamic-island {
+      /* Dynamic Island - glassy, centered, subtle shadow */
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 160px;
+      height: 36px;
+      background: linear-gradient(180deg, rgba(8,10,20,0.85), rgba(10,12,24,0.7));
+      border-radius: 999px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.55), inset 0 1px 0 rgba(255,255,255,0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.9);
+      font-weight: 600;
+      font-size: 13px;
+      backdrop-filter: blur(8px) saturate(140%);
+      -webkit-backdrop-filter: blur(8px) saturate(140%);
+      pointer-events: auto;
+      z-index: 30;
+    }
+
+    .dynamic-island::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 18px;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: #1a1d2e;
+      border-radius: 50%;
+    }
+
+    .dynamic-island::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: #1a1d2e;
+      border-radius: 50%;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border-radius: 40px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Premium CTA Buttons */
+    .cta-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+
+    .cta-primary {
+      padding: 20px 52px;
+      font-size: 17px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, #0077B6 0%, #023E8A 100%);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 119, 182, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .cta-primary:hover::before {
+      left: 100%;
+    }
+
+    .cta-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 119, 182, 0.6);
+    }
+
+    .cta-secondary {
+      padding: 20px 52px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #023E8A;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid rgba(0, 119, 182, 0.3);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .cta-secondary:hover {
+      background: rgba(255, 255, 255, 1);
+      border-color: rgba(0, 119, 182, 0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Features Section */
+    .features {
+      padding: 120px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .features-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 64px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 72px;
+      background: linear-gradient(135deg, #023E8A 0%, #0077B6 50%, #00B4D8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -3px;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 119, 182, 0.15);
+      border-radius: 24px;
+      padding: 44px 40px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 180, 216, 0.08);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 180, 216, 0.5), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 180, 216, 0.4);
+      box-shadow: 0 20px 60px rgba(0, 180, 216, 0.25);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0, 180, 216, 0.4);
+    }
+
+    .feature-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+
+    .feature-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 16px;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+    }
+
+    .feature-desc {
+      font-size: 17px;
+      color: #475569;
+      line-height: 1.7;
+    }
+
+    /* Testimonials Section */
+    .social-proof {
+      padding: 100px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .trust-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: #0f172a;
+      text-align: center;
+      margin-bottom: 64px;
+      line-height: 1.3;
+      letter-spacing: -2px;
+    }
+
+    .reviews-container {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      padding-bottom: 24px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(102, 126, 234, 0.5) transparent;
+      scroll-snap-type: x mandatory;
+    }
+
+    .reviews-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .reviews-container::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .reviews-container::-webkit-scrollbar-thumb {
+      background: rgba(72, 202, 228, 0.5);
+      border-radius: 10px;
+    }
+
+    .review-bubble {
+      min-width: 340px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(0, 119, 182, 0.15);
+      border-radius: 24px;
+      padding: 32px;
+      scroll-snap-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 180, 216, 0.08);
+    }
+
+    .review-bubble:hover {
+      transform: translateY(-6px);
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 180, 216, 0.3);
+      box-shadow: 0 20px 50px rgba(0, 180, 216, 0.2);
+    }
+
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 22px;
+      box-shadow: 0 6px 20px rgba(0, 180, 216, 0.4);
+    }
+
+    .reviewer-info {
+      flex: 1;
+    }
+
+    .reviewer-name {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .reviewer-location {
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .review-stars {
+      color: #fbbf24;
+      font-size: 18px;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+
+    .review-text {
+      font-size: 16px;
+      color: #475569;
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 100px 48px 60px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.5);
+      border-top: 1px solid rgba(0, 119, 182, 0.15);
+      backdrop-filter: blur(20px);
+    }
+
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00B4D8 0%, #48CAE4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .footer-tagline {
+      font-size: 16px;
+      color: #64748b;
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+
+    .social-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 119, 182, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .social-icon:hover {
+      background: linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);
+      border-color: transparent;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 180, 216, 0.4);
+    }
+
+    .social-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: #475569;
+      transition: fill 0.3s ease;
+    }
+
+    .social-icon:hover svg {
+      fill: white;
+    }
+
+    .copyright {
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .header {
+        padding: 18px 24px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      .hero {
+        padding: 120px 24px 60px;
+      }
+
+      .hero-headline,
+      .hero-subheadline {
+        font-size: 56px;
+        letter-spacing: -2px;
+      }
+
+      .hero-description {
+        font-size: 18px;
+      }
+
+      .phone-mockup {
+        width: 280px;
+        height: 560px;
+      }
+
+      .features {
+        padding: 80px 24px;
+      }
+
+      .features-headline {
+        font-size: 42px;
+      }
+
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card {
+        padding: 36px 28px;
+      }
+
+      .cta-group {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .cta-primary,
+      .cta-secondary {
+        width: 100%;
+      }
+
+      .trust-headline {
+        font-size: 36px;
+      }
+    }
+  </style>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+  <!-- Leaflet CSS & JS (Open-source map, không cần API key) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+ </head>
+ <body><!-- Premium Background -->
+  <div class="hero-bg"></div>
+  <div class="gradient-orbs">
+   <div class="orb orb-1"></div>
+   <div class="orb orb-2"></div>
+   <div class="orb orb-3"></div>
+  </div><!-- Modern Header -->
+  <header class="header">
+   <div class="logo">
+    HOXICOCO
+   </div>
+   <div style="display: flex; gap: 12px;"><button class="header-login" id="header-login">Đăng Nhập</button> <button class="header-cta" id="header-cta">Đăng Ký</button>
+   </div>
+  </header><!-- Hero Section -->
+  <section class="hero">
+   <div class="hero-content">
+    <div class="hero-badge" id="hero-badge">
+     Tiên Phong tại Việt Nam
+    </div>
+    <h1 class="hero-headline" id="hero-headline">Tìm WC Sạch</h1>
+    <h2 class="hero-subheadline" id="hero-subheadline">Trong 30 Giây</h2>
+    <p class="hero-description" id="hero-description">Nền tảng web thông minh giúp bạn tìm nhà vệ sinh công cộng sạch sẽ ngay lập tức với công nghệ AI và bản đồ thời gian thực</p><!-- Premium Phone Mockup -->
+    <div class="phone-container">
+     <div class="phone-mockup">
+      <div class="phone-notch">
+        <div class="dynamic-island" id="dynamic-island" role="button" aria-label="Dynamic Island">
+          <span class="island-content">5 gần đây</span>
+        </div>
+      </div>
+      <div class="phone-screen">
+        <!-- Thay iframe bằng Leaflet map (không cần API key) -->
+        <div id="map-embed" style="width:100%; height:100%;"></div>
+      </div>
+     </div>
+    </div><!-- CTA Buttons -->
+    <div class="cta-group"><button class="cta-primary" id="cta-primary"> <span id="hero-cta-primary">Bắt Đầu Ngay</span> </button> <button class="cta-secondary" id="cta-secondary"> <span id="hero-cta-secondary">Tìm Hiểu Thêm</span> </button>
+    </div>
+   </div>
+  </section><!-- Features Bento Grid -->
+  <section class="features">
+   <h2 class="features-headline">Tính Năng Đột Phá</h2>
+   <div class="bento-grid">
+    <div class="feature-card">
+     <div class="feature-icon">
+      <svg viewbox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+      </svg>
+     </div>
+     <h3 class="feature-title" id="feature-1-title">Bản Đồ Nhiệt Thời Gian Thực</h3>
+     <p class="feature-desc" id="feature-1-desc">Cập nhật độ sạch liên tục từ cộng đồng người dùng khắp Việt Nam</p>
+    </div>
+    <div class="feature-card">
+     <div class="feature-icon">
+      <svg viewbox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+      </svg>
+     </div>
+     <h3 class="feature-title" id="feature-2-title">CleanScore™ AI</h3>
+     <p class="feature-desc" id="feature-2-desc">Đánh giá vệ sinh tự động bằng trí tuệ nhân tạo tiên tiến</p>
+    </div>
+    <div class="feature-card">
+     <div class="feature-icon">
+      <svg viewbox="0 0 24 24" fill="white"><path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z" />
+      </svg>
+     </div>
+     <h3 class="feature-title" id="feature-3-title">Báo Cáo Nhanh</h3>
+     <p class="feature-desc" id="feature-3-desc">Chụp ảnh và gửi phản hồi chỉ trong 3 giây</p>
+    </div>
+    <div class="feature-card">
+     <div class="feature-icon">
+      <svg viewbox="0 0 24 24" fill="white"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
+      </svg>
+     </div>
+     <h3 class="feature-title" id="feature-4-title">Điều Hướng Thông Minh</h3>
+     <p class="feature-desc" id="feature-4-desc">Dẫn đường đến nhà vệ sinh gần nhất với chất lượng tốt nhất</p>
+    </div>
+   </div>
+  </section><!-- Testimonials -->
+  <section class="social-proof">
+   <h2 class="trust-headline" id="trust-headline">Được Tin Dùng Bởi Cộng Đồng</h2>
+   <div class="reviews-container">
+    <div class="review-bubble">
+     <div class="reviewer">
+      <div class="avatar">
+       M
+      </div>
+      <div class="reviewer-info">
+       <div class="reviewer-name">
+        Minh Anh
+       </div>
+       <div class="reviewer-location">
+        Hà Nội
+       </div>
+      </div>
+     </div>
+     <div class="review-stars">
+      ★★★★★
+     </div>
+     <p class="review-text">"Ý tưởng rất hay! Mong sớm được trải nghiệm khi ra mắt chính thức."</p>
+    </div>
+    <div class="review-bubble">
+     <div class="reviewer">
+      <div class="avatar">
+       T
+      </div>
+      <div class="reviewer-info">
+       <div class="reviewer-name">
+        Thảo Nguyên
+       </div>
+       <div class="reviewer-location">
+        TP.HCM
+       </div>
+      </div>
+     </div>
+     <div class="review-stars">
+      ★★★★★
+     </div>
+     <p class="review-text">"Dự án rất cần thiết cho cộng đồng. Rất mong chờ ngày ra mắt!"</p>
+    </div>
+    <div class="review-bubble">
+     <div class="reviewer">
+      <div class="avatar">
+       H
+      </div>
+      <div class="reviewer-info">
+       <div class="reviewer-name">
+        Hoàng Nam
+       </div>
+       <div class="reviewer-location">
+        Đà Nẵng
+       </div>
+      </div>
+     </div>
+     <div class="review-stars">
+      ★★★★★
+     </div>
+     <p class="review-text">"Giao diện đẹp, ý tưởng sáng tạo. Đăng ký để trải nghiệm ngay!"</p>
+    </div>
+   </div>
+  </section><!-- Footer -->
+  <footer class="footer">
+   <div class="footer-logo">
+    HOXICOCO
+   </div>
+   <p class="footer-tagline" id="footer-tagline">Công nghệ vì cộng đồng văn minh</p>
+   <div class="footer-social">
+    <div class="social-icon">
+     <svg viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+     </svg>
+    </div>
+    <div class="social-icon">
+     <svg viewbox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+     </svg>
+    </div>
+    <div class="social-icon">
+     <svg viewbox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+     </svg>
+    </div>
+   </div>
+   <p class="copyright">© 2025 Hoxicoco. All rights reserved.</p>
+  </footer>
+  <script>
+    const defaultConfig = {
+      hero_headline: "Tìm WC Sạch",
+      hero_subheadline: "Trong 30 Giây",
+      hero_description: "Nền tảng web thông minh giúp bạn tìm nhà vệ sinh công cộng sạch sẽ ngay lập tức với công nghệ AI và bản đồ thời gian thực",
+      hero_cta_primary: "Bắt Đầu Ngay",
+      hero_cta_secondary: "Tìm Hiểu Thêm",
+      header_cta: "Đăng Ký",
+      header_login: "Đăng Nhập",
+      hero_badge: "Tiên Phong tại Việt Nam",
+      feature_1_title: "Bản Đồ Nhiệt Thời Gian Thực",
+      feature_1_desc: "Cập nhật độ sạch liên tục từ cộng đồng người dùng khắp Việt Nam",
+      feature_2_title: "CleanScore™ AI",
+      feature_2_desc: "Đánh giá vệ sinh tự động bằng trí tuệ nhân tạo tiên tiến",
+      feature_3_title: "Báo Cáo Nhanh",
+      feature_3_desc: "Chụp ảnh và gửi phản hồi chỉ trong 3 giây",
+      feature_4_title: "Điều Hướng Thông Minh",
+      feature_4_desc: "Dẫn đường đến nhà vệ sinh gần nhất với chất lượng tốt nhất",
+      trust_headline: "Được Tin Dùng Bởi Cộng Đồng",
+      footer_tagline: "Công nghệ vì cộng đồng văn minh",
+      background_color: "#0a0e27",
+      surface_color: "#1e293b",
+      text_color: "#ffffff",
+      primary_action_color: "#00B4D8",
+      secondary_action_color: "#48CAE4",
+      font_family: "Inter",
+      font_size: 16
+    };
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = '-apple-system, BlinkMacSystemFont, sans-serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      // Hero content
+      document.getElementById('hero-headline').textContent = config.hero_headline || defaultConfig.hero_headline;
+      document.getElementById('hero-headline').style.fontSize = `${baseSize * 6}px`;
+      
+      document.getElementById('hero-subheadline').textContent = config.hero_subheadline || defaultConfig.hero_subheadline;
+      document.getElementById('hero-subheadline').style.fontSize = `${baseSize * 6}px`;
+      
+      document.getElementById('hero-description').textContent = config.hero_description || defaultConfig.hero_description;
+      document.getElementById('hero-description').style.fontSize = `${baseSize * 1.375}px`;
+      
+      document.getElementById('hero-cta-primary').textContent = config.hero_cta_primary || defaultConfig.hero_cta_primary;
+      document.getElementById('hero-cta-secondary').textContent = config.hero_cta_secondary || defaultConfig.hero_cta_secondary;
+      document.getElementById('header-cta').textContent = config.header_cta || defaultConfig.header_cta;
+      document.getElementById('header-login').textContent = config.header_login || defaultConfig.header_login;
+      document.getElementById('hero-badge').textContent = config.hero_badge || defaultConfig.hero_badge;
+      
+      // Features
+      document.getElementById('feature-1-title').textContent = config.feature_1_title || defaultConfig.feature_1_title;
+      document.getElementById('feature-1-title').style.fontSize = `${baseSize * 1.625}px`;
+      document.getElementById('feature-1-desc').textContent = config.feature_1_desc || defaultConfig.feature_1_desc;
+      document.getElementById('feature-1-desc').style.fontSize = `${baseSize * 1.0625}px`;
+      
+      document.getElementById('feature-2-title').textContent = config.feature_2_title || defaultConfig.feature_2_title;
+      document.getElementById('feature-2-title').style.fontSize = `${baseSize * 1.625}px`;
+      document.getElementById('feature-2-desc').textContent = config.feature_2_desc || defaultConfig.feature_2_desc;
+      document.getElementById('feature-2-desc').style.fontSize = `${baseSize * 1.0625}px`;
+      
+      document.getElementById('feature-3-title').textContent = config.feature_3_title || defaultConfig.feature_3_title;
+      document.getElementById('feature-3-title').style.fontSize = `${baseSize * 1.625}px`;
+      document.getElementById('feature-3-desc').textContent = config.feature_3_desc || defaultConfig.feature_3_desc;
+      document.getElementById('feature-3-desc').style.fontSize = `${baseSize * 1.0625}px`;
+      
+      document.getElementById('feature-4-title').textContent = config.feature_4_title || defaultConfig.feature_4_title;
+      document.getElementById('feature-4-title').style.fontSize = `${baseSize * 1.625}px`;
+      document.getElementById('feature-4-desc').textContent = config.feature_4_desc || defaultConfig.feature_4_desc;
+      document.getElementById('feature-4-desc').style.fontSize = `${baseSize * 1.0625}px`;
+      
+      // Trust
+      document.getElementById('trust-headline').textContent = config.trust_headline || defaultConfig.trust_headline;
+      document.getElementById('trust-headline').style.fontSize = `${baseSize * 3}px`;
+      
+      // Footer
+      document.getElementById('footer-tagline').textContent = config.footer_tagline || defaultConfig.footer_tagline;
+      document.getElementById('footer-tagline').style.fontSize = `${baseSize}px`;
+
+      // Apply colors
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+      document.body.style.background = backgroundColor;
+      document.body.style.color = textColor;
+      
+      const primaryButtons = document.querySelectorAll('.cta-primary, .header-cta');
+      primaryButtons.forEach(btn => {
+        btn.style.background = `linear-gradient(135deg, #0077B6 0%, #023E8A 100%)`;
+      });
+
+      const featureIcons = document.querySelectorAll('.feature-icon');
+      featureIcons.forEach(icon => {
+        icon.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, #0077B6 100%)`;
+      });
+
+      const avatars = document.querySelectorAll('.avatar');
+      avatars.forEach(avatar => {
+        avatar.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, #0077B6 100%)`;
+      });
+
+      const heroHeadline = document.querySelector('.hero-headline');
+      if (heroHeadline) {
+        heroHeadline.style.background = `linear-gradient(135deg, ${textColor} 0%, ${secondaryActionColor} 50%, ${primaryActionColor} 100%)`;
+        heroHeadline.style.webkitBackgroundClip = 'text';
+        heroHeadline.style.webkitTextFillColor = 'transparent';
+        heroHeadline.style.backgroundClip = 'text';
+      }
+
+      const heroSubheadline = document.querySelector('.hero-subheadline');
+      if (heroSubheadline) {
+        heroSubheadline.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, #0077B6 100%)`;
+        heroSubheadline.style.webkitBackgroundClip = 'text';
+        heroSubheadline.style.webkitTextFillColor = 'transparent';
+        heroSubheadline.style.backgroundClip = 'text';
+      }
+
+      const logo = document.querySelector('.logo');
+      if (logo) {
+        logo.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${secondaryActionColor} 100%)`;
+        logo.style.webkitBackgroundClip = 'text';
+        logo.style.webkitTextFillColor = 'transparent';
+        logo.style.backgroundClip = 'text';
+      }
+
+      const footerLogo = document.querySelector('.footer-logo');
+      if (footerLogo) {
+        footerLogo.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${secondaryActionColor} 100%)`;
+        footerLogo.style.webkitBackgroundClip = 'text';
+        footerLogo.style.webkitTextFillColor = 'transparent';
+        footerLogo.style.backgroundClip = 'text';
+      }
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["hero_badge", config.hero_badge || defaultConfig.hero_badge],
+          ["hero_headline", config.hero_headline || defaultConfig.hero_headline],
+          ["hero_subheadline", config.hero_subheadline || defaultConfig.hero_subheadline],
+          ["hero_description", config.hero_description || defaultConfig.hero_description],
+          ["hero_cta_primary", config.hero_cta_primary || defaultConfig.hero_cta_primary],
+          ["hero_cta_secondary", config.hero_cta_secondary || defaultConfig.hero_cta_secondary],
+          ["header_cta", config.header_cta || defaultConfig.header_cta],
+          ["header_login", config.header_login || defaultConfig.header_login],
+          ["feature_1_title", config.feature_1_title || defaultConfig.feature_1_title],
+          ["feature_1_desc", config.feature_1_desc || defaultConfig.feature_1_desc],
+          ["feature_2_title", config.feature_2_title || defaultConfig.feature_2_title],
+          ["feature_2_desc", config.feature_2_desc || defaultConfig.feature_2_desc],
+          ["feature_3_title", config.feature_3_title || defaultConfig.feature_3_title],
+          ["feature_3_desc", config.feature_3_desc || defaultConfig.feature_3_desc],
+          ["feature_4_title", config.feature_4_title || defaultConfig.feature_4_title],
+          ["feature_4_desc", config.feature_4_desc || defaultConfig.feature_4_desc],
+          ["trust_headline", config.trust_headline || defaultConfig.trust_headline],
+          ["footer_tagline", config.footer_tagline || defaultConfig.footer_tagline]
+        ])
+      });
+    }
+  </script>
+</script>
+<!-- Leaflet map initialization: hiển thị mock toilets tại Hà Nội -->
+<script>
+  // Dữ liệu mock các nhà vệ sinh công cộng trong khu vực Hà Nội
+  const mockToilets = [
+    { id: 'T001', name: 'Công viên Thống Nhất', lat: 21.0024, lng: 105.8465, score: 88 },
+    { id: 'T002', name: 'Bến xe Giáp Bát', lat: 20.9965, lng: 105.8427, score: 74 },
+    { id: 'T003', name: 'BV Bạch Mai - Khu A', lat: 21.0045, lng: 105.8479, score: 81 },
+    { id: 'T004', name: 'Ga Hà Nội', lat: 21.0235, lng: 105.8412, score: 69 },
+    { id: 'T005', name: 'Hồ Hoàn Kiếm (gần)', lat: 21.0285, lng: 105.8523, score: 92 }
+  ];
+
+  function initEmbeddedMap() {
+    const mapEl = document.getElementById('map-embed');
+    if (!mapEl) return;
+
+    // Khởi tạo map ở trung tâm Hà Nội
+    const center = [21.0278, 105.8342];
+    const map = L.map('map-embed', { zoomControl: false }).setView(center, 13);
+
+    // Tile layer OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Marker cluster or simple markers (simple implementation)
+    mockToilets.forEach(t => {
+      const marker = L.marker([t.lat, t.lng]).addTo(map);
+      marker.bindPopup(`<strong>${t.name}</strong><br/>CleanScore: ${t.score}`);
+    });
+
+    // Fit bounds to mock data
+    const bounds = L.latLngBounds(mockToilets.map(t => [t.lat, t.lng]));
+    map.fitBounds(bounds.pad(0.4));
+  }
+
+  // Khởi tạo khi DOM sẵn sàng
+  document.addEventListener('DOMContentLoaded', () => {
+    initEmbeddedMap();
+  });
+</script>
+</body>
+</html>

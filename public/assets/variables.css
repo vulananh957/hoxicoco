@@ -1,0 +1,85 @@
+/* ===================================
+   HOXICOCO - CSS VARIABLES
+   Định nghĩa màu sắc & font chữ chuẩn
+   Tuyệt đối KHÔNG hardcode màu trong code
+   =================================== */
+
+:root {
+  /* ========== COLOR PALETTE ========== */
+  
+  /* Background Colors - Nền */
+  --bg-primary: #FFFFFF;           /* Trắng tinh khôi - Nền chính */
+  --bg-primary-alt: #CAF0F8;       /* Xanh băng nhạt - Nền vùng rộng */
+  --bg-secondary: #90E0EF;         /* Xanh loãng - Card/Khối */
+  
+  /* Primary Action Colors - Màu hành động chính */
+  --color-primary: #00B4D8;        /* Cyan đậm - Nút bấm/Icon chính */
+  --color-secondary: #48CAE4;      /* Cyan sáng - Hover/Focus */
+  
+  /* Text Colors - Màu chữ */
+  --text-main: #03045E;            /* Xanh đen đại dương - Tiêu đề */
+  --text-body: #023E8A;            /* Xanh đậm - Nội dung */
+  
+  /* Status Colors - Màu trạng thái */
+  --status-good: #2ECC71;          /* Xanh lá - Sạch sẽ */
+  --status-average: #F1C40F;       /* Vàng - Tạm ổn */
+  --status-bad: #E74C3C;           /* Đỏ - Bẩn/Khẩn cấp */
+  
+  /* ========== TYPOGRAPHY ========== */
+  
+  /* Font Family */
+  --font-primary: 'Inter', 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;         /* 12px */
+  --font-size-sm: 0.875rem;        /* 14px */
+  --font-size-base: 1rem;          /* 16px */
+  --font-size-lg: 1.125rem;        /* 18px */
+  --font-size-xl: 1.25rem;         /* 20px */
+  --font-size-2xl: 1.5rem;         /* 24px */
+  --font-size-3xl: 1.875rem;       /* 30px */
+  --font-size-4xl: 2.25rem;        /* 36px */
+  
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* ========== SPACING ========== */
+  
+  --spacing-xs: 0.25rem;           /* 4px */
+  --spacing-sm: 0.5rem;            /* 8px */
+  --spacing-md: 1rem;              /* 16px */
+  --spacing-lg: 1.5rem;            /* 24px */
+  --spacing-xl: 2rem;              /* 32px */
+  --spacing-2xl: 3rem;             /* 48px */
+  
+  /* ========== BORDER RADIUS ========== */
+  
+  --radius-sm: 8px;                /* Góc nhỏ */
+  --radius-md: 12px;               /* Góc vừa - Dùng cho Card */
+  --radius-lg: 16px;               /* Góc lớn - Friendly */
+  --radius-full: 9999px;           /* Tròn hoàn toàn */
+  
+  /* ========== SHADOWS ========== */
+  
+  --shadow-soft: 0 4px 20px rgba(0, 180, 216, 0.15);           /* Soft shadow nhẹ nhàng */
+  --shadow-medium: 0 8px 30px rgba(0, 180, 216, 0.2);          /* Shadow vừa */
+  --shadow-strong: 0 12px 40px rgba(0, 180, 216, 0.25);        /* Shadow mạnh */
+  
+  /* ========== TRANSITIONS ========== */
+  
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+  
+  /* ========== Z-INDEX ========== */
+  
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal-backdrop: 900;
+  --z-modal: 1000;
+  --z-toast: 1100;
+}
