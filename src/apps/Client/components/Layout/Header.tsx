@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { FilterState, SearchResult, GeoPoint, Toilet } from '../../../../types';
 import { searchPlaces, getPlaceDetail } from '../../../../services/goongService';
 import { User } from 'firebase/auth';
@@ -19,7 +18,6 @@ interface HeaderProps {
   currentUser?: User | null;
   onSignIn?: () => void;
   onSignOut?: () => void;
-  onNavigateToAbout?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ 
@@ -33,11 +31,9 @@ const Header: React.FC<HeaderProps> = ({
   onToiletSelect,
   currentUser,
   onSignIn,
-  onSignOut,
-  onNavigateToAbout
+  onSignOut
 }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   
   // Search State
   const [query, setQuery] = useState('');
@@ -314,15 +310,6 @@ const Header: React.FC<HeaderProps> = ({
           <span className={`text-xs font-semibold ${filters.hasBidet ? 'text-white' : 'text-body-text'}`}>{t('filters.bidet')}</span>
         </button>
 
-        {/* Amenities: Sink */}
-        <button 
-          onClick={() => toggleFilter('hasSink')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full whitespace-nowrap active:scale-95 transition-all ${filters.hasSink ? 'bg-primary shadow-lg shadow-primary/40' : 'glass'}`}
-        >
-          <i className={`ri-hand-heart-line text-lg ${filters.hasSink ? 'text-white' : 'text-primary'}`}></i>
-          <span className={`text-xs font-semibold ${filters.hasSink ? 'text-white' : 'text-body-text'}`}>{t('filters.sink')}</span>
-        </button>
-
       </div>
 
       {/* Login Modal */}
@@ -406,7 +393,6 @@ const Header: React.FC<HeaderProps> = ({
         onClose={() => setShowUserMenu(false)}
         currentUser={currentUser || null}
         onSignOut={() => onSignOut?.()}
-        onNavigateToAbout={() => navigate('/privacy-legal')}
       />
     </div>
   );

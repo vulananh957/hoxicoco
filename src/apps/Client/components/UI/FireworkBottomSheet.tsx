@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { FireworkLocation } from '../../../../types';
+import { FireworkLocation, NavigationState } from '../../../../types';
 import { useTranslation } from 'react-i18next';
 import { getFireworkStatus } from '../../../../utils/fireworkUtils';
-
-import { NavigationState } from '../../../types';
 
 interface FireworkBottomSheetProps {
   firework: FireworkLocation;
