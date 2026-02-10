@@ -51,9 +51,11 @@
     "account": "Account",
     "share": "Share app",
     "feedback": "Feedback",
+    "privacy": "Privacy & Legal",
     "support": "Contact support",
     "logout": "Logout",
-    "loginPrompt": "Login to use all features"
+    "loginPrompt": "Login to use all features",
+    "followUs": "Follow us"
   },
   "game": {
     "title": "Toilet Rush",
@@ -196,6 +198,22 @@
     "comments": "comments",
     "title": "Community",
     "developing": "Feature under development..."
+  },
+  "festival": {
+    "mode": "Festival Mode",
+    "highAlt": "High altitude",
+    "lowAlt": "Low altitude",
+    "date": "Date",
+    "time": "Time",
+    "duration": "Duration",
+    "minutes": "min",
+    "address": "Address",
+    "description": "Description",
+    "upcoming": "Upcoming",
+    "active": "In progress",
+    "ended": "Ended",
+    "directions": "Get directions",
+    "points": "spots"
   },
   "appInfo": {
     "title": "Hoxicoco - Find Toilets",

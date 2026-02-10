@@ -53,5 +53,11 @@ service cloud.firestore {
       allow read: if isAuthenticated();
       allow write: if isAuthenticated();
     }
+    
+    // Fireworks collection (Festival Mode)
+    match /fireworks/{fireworkId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthenticated();
+    }
   }
 }

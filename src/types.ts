@@ -107,3 +107,21 @@ export interface AppState {
   isNavigationActive: boolean;
   isLoading: boolean;
 }
+
+// ==================== FESTIVAL / FIREWORK ====================
+
+export interface FireworkLocation {
+  id: string;
+  name: string;
+  location: GeoPoint;
+  address: string;
+  district: string;        // Quận/Huyện
+  date: string;             // VD: "2026-02-09"
+  time: string;             // VD: "00:00" (giao thừa)
+  duration: number;         // Thời lượng bắn (phút)
+  type: 'high' | 'low';    // Tầm cao / Tầm thấp
+  description?: string;
+  images?: string[];
+  status: 'upcoming' | 'active' | 'ended';
+  created_at?: number;
+}

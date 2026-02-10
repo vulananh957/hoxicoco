@@ -124,19 +124,20 @@ const Posts: React.FC = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Bài viết</h1>
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="py-2 px-4 rounded-xl bg-primary text-white flex items-center gap-2"
-        >
-          <i className="ri-add-line"></i>
-          Thêm bài viết
-        </button>
-      </div>
+      <div className="space-y-4 sm:space-y-6 pb-6">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold">Bài viết</h1>
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="py-2 px-4 rounded-xl bg-primary text-white flex items-center gap-2"
+          >
+            <i className="ri-add-line"></i>
+            Thêm bài viết
+          </button>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {posts.map(p => (
+        <div className="grid gap-4" style={{gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))'}}>
+          {posts.map(p => (
           <div key={p.id} className="glass-admin rounded-xl p-4">
             <div className="flex items-start gap-3">
               <div className="flex-1">
@@ -174,9 +175,10 @@ const Posts: React.FC = () => {
             </div>
           </div>
         ))}
+        </div>
       </div>
 
-      {showAddModal && (
+    {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white p-6 border-b border-gray-100 z-10">

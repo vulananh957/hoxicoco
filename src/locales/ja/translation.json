@@ -51,9 +51,11 @@
     "account": "アカウント",
     "share": "アプリを共有",
     "feedback": "フィードバック",
+    "privacy": "プライバシーと法律",
     "support": "サポートに連絡",
     "logout": "ログアウト",
-    "loginPrompt": "すべての機能を使用するにはログインしてください"
+    "loginPrompt": "すべての機能を使用するにはログインしてください",
+    "followUs": "フォローする"
   },
   "game": {
     "title": "トイレラッシュ",
@@ -196,6 +198,22 @@
     "comments": "コメント",
     "title": "コミュニティ",
     "developing": "機能開発中..."
+  },
+  "festival": {
+    "mode": "フェスティバルモード",
+    "highAlt": "高空",
+    "lowAlt": "低空",
+    "date": "日付",
+    "time": "時間",
+    "duration": "所要時間",
+    "minutes": "分",
+    "address": "住所",
+    "description": "説明",
+    "upcoming": "開催予定",
+    "active": "開催中",
+    "ended": "終了",
+    "directions": "道案内",
+    "points": "箇所"
   },
   "appInfo": {
     "title": "Hoxicoco - トイレを探す",

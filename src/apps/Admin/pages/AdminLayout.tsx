@@ -38,6 +38,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ user }) => {
     { path: '/admin/pending', icon: 'ri-time-line', label: 'Chờ duyệt' },
     { path: '/admin/reports', icon: 'ri-alarm-warning-line', label: 'Phản ánh' },
     { path: '/admin/users', icon: 'ri-user-line', label: 'Người dùng' },
+    { path: '/admin/fireworks', icon: 'ri-sparkling-2-line', label: 'Pháo hoa' },
   ];
 
   const handleNavClick = () => {

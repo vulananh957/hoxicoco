@@ -11,11 +11,12 @@ import ReportModal from './components/UI/ReportModal';
 import Toast from './components/UI/Toast';
 import AddToiletForm from './components/Forms/AddToiletForm';
 import Community from './components/Community/Community';
+import FireworkBottomSheet from './components/UI/FireworkBottomSheet';
 
 // Services & Types
-import { subscribeToToilets, signInWithGoogle, logOut, onAuthChange, addReport, ReportType, checkIsAdmin } from '../../services/firebase';
+import { subscribeToToilets, signInWithGoogle, logOut, onAuthChange, addReport, ReportType, checkIsAdmin, subscribeToFireworks } from '../../services/firebase';
 import { getDetailedRoute } from '../../services/goongService';
-import { Toilet, FilterState, GeoPoint, NavigationState } from '../../types';
+import { Toilet, FilterState, GeoPoint, NavigationState, FireworkLocation } from '../../types';
 import { DEFAULT_VIEWPORT, isAdmin } from '../../constants';
 
 const ClientLayout: React.FC = () => {
@@ -62,6 +63,12 @@ const ClientLayout: React.FC = () => {
   const [showReportModal, setShowReportModal] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
   const [hideBottomNav, setHideBottomNav] = useState(false);
+
+  // Festival Mode States
+  const [festivalMode, setFestivalMode] = useState(false);
+  const [showFestivalModeNotification, setShowFestivalModeNotification] = useState(false);
+  const [fireworks, setFireworks] = useState<FireworkLocation[]>([]);
+  const [selectedFirework, setSelectedFirework] = useState<FireworkLocation | null>(null);
 
   // Auth listener
   useEffect(() => {
@@ -132,6 +139,28 @@ const ClientLayout: React.FC = () => {
       unsubscribe();
     };
   }, []);
+
+  // Subscribe to firework locations when festival mode is on
+  useEffect(() => {
+    if (!festivalMode) return;
+
+    const unsubscribe = subscribeToFireworks((data) => {
+      setFireworks(data);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [festivalMode]);
+
+  // Show festival mode notification for 4 seconds
+  useEffect(() => {
+    if (festivalMode) {
+      setShowFestivalModeNotification(true);
+      const timer = setTimeout(() => setShowFestivalModeNotification(false), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [festivalMode]);
 
   // Calculate distance between two points
   const calculateDistance = (loc1: GeoPoint, loc2: GeoPoint): number => {
@@ -394,6 +423,9 @@ const ClientLayout: React.FC = () => {
           onToiletSelect={handleToiletSelect}
           routeGeometry={navigationState.route?.geometry || null}
           navigationState={navigationState}
+          festivalMode={festivalMode}
+          fireworks={fireworks}
+          onFireworkSelect={(fw) => { setSelectedFirework(fw); setSelectedToilet(null); }}
         />
       )}
 
@@ -480,6 +512,70 @@ const ClientLayout: React.FC = () => {
           message={toast.message}
           type={toast.type}
           onClose={() => setToast(null)}
+        />
+      )}
+
+      {/* Festival Mode Toggle Button */}
+      {activeTab === 'map' && (
+        <button
+          onClick={() => {
+            setFestivalMode(!festivalMode);
+            if (festivalMode) {
+              setSelectedFirework(null);
+            }
+          }}
+          className={`fixed z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
+            festivalMode 
+              ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-orange-500/40 scale-110' 
+              : 'bg-white/90 backdrop-blur text-gray-600 hover:bg-orange-50 hover:text-orange-500'
+          }`}
+          style={{ bottom: hideBottomNav ? '16px' : '100px', left: '16px' }}
+          title={festivalMode ? 'Tắt chế độ lễ hội' : 'Bật chế độ lễ hội'}
+        >
+          <i className={`ri-sparkling-2-fill text-xl ${festivalMode ? 'animate-pulse' : ''}`}></i>
+        </button>
+      )}
+
+      {/* Festival Mode Banner */}
+      {showFestivalModeNotification && activeTab === 'map' && (
+        <div className="fixed top-32 left-1/2 -translate-x-1/2 z-40 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full shadow-lg shadow-orange-500/30 flex items-center gap-2 text-sm font-medium whitespace-nowrap"
+          style={{ animation: 'slideDown 0.3s ease-out' }}
+        >
+          <i className="ri-sparkling-2-fill text-sm"></i>
+          <span>Chế độ Lễ hội</span>
+          <span className="bg-white/20 px-2 py-0.5 rounded-full text-xs">{fireworks.length} điểm</span>
+        </div>
+      )}
+
+      {/* Firework Bottom Sheet */}
+      {selectedFirework && activeTab === 'map' && (
+        <FireworkBottomSheet
+          firework={selectedFirework}
+          onClose={() => setSelectedFirework(null)}
+          onDirections={async () => {
+            if (!userLocation) {
+              setToast({ message: 'Cần bật vị trí để chỉ đường', type: 'error' });
+              return;
+            }
+            const route = await getDetailedRoute(userLocation, selectedFirework.location);
+            if (route) {
+              startLocationTracking();
+              setNavigationState({
+                isActive: true,
+                route,
+                currentStepIndex: 0,
+                distanceToNextStep: route.steps[0]?.distance || 0,
+                remainingDistance: route.totalDistance,
+                remainingDuration: route.totalDuration
+              });
+              setSelectedFirework(null);
+              setToast({ message: 'Bắt đầu dẫn đường!', type: 'info' });
+            } else {
+              setToast({ message: 'Không thể tìm được đường đi', type: 'error' });
+            }
+          }}
+          onCancelNavigation={handleCancelNavigation}
+          navigationState={navigationState}
         />
       )}
 

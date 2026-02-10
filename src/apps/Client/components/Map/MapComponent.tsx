@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import { GOONG_MAPTILES_KEY, DEFAULT_VIEWPORT } from '../../../../constants';
-import { Toilet, GeoPoint, NavigationState } from '../../../../types';
+import { Toilet, GeoPoint, NavigationState, FireworkLocation } from '../../../../types';
 
 // Declare global goongjs variable loaded via script tag
 declare global {
@@ -16,6 +16,10 @@ interface MapComponentProps {
   onToiletSelect: (toilet: Toilet) => void;
   routeGeometry: string | null; // Encoded polyline string from Goong
   navigationState?: NavigationState; // Turn-by-turn navigation state
+  // Festival Mode
+  festivalMode?: boolean;
+  fireworks?: FireworkLocation[];
+  onFireworkSelect?: (firework: FireworkLocation) => void;
 }
 
 // Cluster interface
@@ -23,6 +27,15 @@ interface Cluster {
   lat: number;
   lng: number;
   toilets: Toilet[];
+  fireworks?: FireworkLocation[];
+  count: number;
+}
+
+// Firework cluster interface
+interface FireworkCluster {
+  lat: number;
+  lng: number;
+  fireworks: FireworkLocation[];
   count: number;
 }
 
@@ -32,11 +45,15 @@ const MapComponent: React.FC<MapComponentProps> = ({
   toilets, 
   onToiletSelect,
   routeGeometry,
-  navigationState
+  navigationState,
+  festivalMode,
+  fireworks,
+  onFireworkSelect
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null); // Use any type as we are using global lib
   const markersRef = useRef<any[]>([]);
+  const fireworkMarkersRef = useRef<any[]>([]); // Separate ref for firework markers
   const userMarkerRef = useRef<any>(null); // Custom user location marker with heading
   const userArrowRef = useRef<HTMLDivElement | null>(null); // Reference to arrow element for rotation
   const compassEnabledRef = useRef<boolean>(false); // Track if compass is enabled
@@ -99,6 +116,53 @@ const MapComponent: React.FC<MapComponentProps> = ({
         lat: avgLat,
         lng: avgLng,
         toilets: nearby,
+        count: nearby.length
+      });
+    });
+
+    return clusters;
+  }, [CLUSTER_ZOOM_THRESHOLD]);
+
+  // Clustering function for fireworks
+  const createFireworkClusters = useCallback((fireworkList: FireworkLocation[], zoom: number): FireworkCluster[] => {
+    if (zoom >= CLUSTER_ZOOM_THRESHOLD) {
+      // No clustering at high zoom - each firework is its own "cluster"
+      return fireworkList.map(fw => ({
+        lat: fw.location.lat,
+        lng: fw.location.lng,
+        fireworks: [fw],
+        count: 1
+      }));
+    }
+
+    // Cluster radius based on zoom (smaller zoom = larger radius)
+    const clusterRadius = Math.pow(2, 14 - zoom) * 0.005; // degrees
+    
+    const clusters: FireworkCluster[] = [];
+    const assigned = new Set<string>();
+
+    fireworkList.forEach(firework => {
+      if (assigned.has(firework.id)) return;
+
+      // Find all fireworks within radius
+      const nearby = fireworkList.filter(fw => {
+        if (assigned.has(fw.id)) return false;
+        const dlat = Math.abs(fw.location.lat - firework.location.lat);
+        const dlng = Math.abs(fw.location.lng - firework.location.lng);
+        return dlat < clusterRadius && dlng < clusterRadius;
+      });
+
+      // Mark as assigned
+      nearby.forEach(fw => assigned.add(fw.id));
+
+      // Calculate cluster center
+      const avgLat = nearby.reduce((sum, fw) => sum + fw.location.lat, 0) / nearby.length;
+      const avgLng = nearby.reduce((sum, fw) => sum + fw.location.lng, 0) / nearby.length;
+
+      clusters.push({
+        lat: avgLat,
+        lng: avgLng,
+        fireworks: nearby,
         count: nearby.length
       });
     });
@@ -503,6 +567,11 @@ const MapComponent: React.FC<MapComponentProps> = ({
     markersRef.current.forEach(marker => marker.remove());
     markersRef.current = [];
 
+    // Hide toilet markers when in Festival Mode
+    if (festivalMode) {
+      return;
+    }
+
     // Create clusters based on current zoom
     const clusters = createClusters(toilets, currentZoom);
 
@@ -649,7 +718,189 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
       markersRef.current.push(marker);
     });
-  }, [toilets, onToiletSelect, mapLoaded, currentZoom, createClusters, adjustColor]);
+  }, [toilets, onToiletSelect, mapLoaded, currentZoom, createClusters, adjustColor, festivalMode]);
+
+  // ==================== FIREWORK MARKERS ====================
+  useEffect(() => {
+    if (!mapRef.current || !window.goongjs || !mapLoaded) return;
+
+    const goongjs = window.goongjs;
+
+    // Clear existing firework markers
+    fireworkMarkersRef.current.forEach(marker => marker.remove());
+    fireworkMarkersRef.current = [];
+
+    // Only show firework markers when festival mode is on
+    if (!festivalMode || !fireworks || fireworks.length === 0) return;
+
+    // Create clusters based on current zoom
+    const clusters = createFireworkClusters(fireworks, currentZoom);
+
+    clusters.forEach((cluster, idx) => {
+      const el = document.createElement('div');
+      
+      if (cluster.count === 1) {
+        // Single firework marker with sparkles
+        const fw = cluster.fireworks[0];
+        el.className = 'firework-marker';
+
+        const isHigh = fw.type === 'high';
+        const primaryColor = isHigh ? '#FF6B35' : '#FFD700';
+        const secondaryColor = isHigh ? '#D62828' : '#FF8C00';
+        const glowColor = isHigh ? 'rgba(255, 107, 53, 0.5)' : 'rgba(255, 215, 0, 0.5)';
+
+        el.innerHTML = `
+          <style>
+            .fw-pin-${idx} {
+              position: relative;
+              cursor: pointer;
+              filter: drop-shadow(0 3px 8px ${glowColor});
+              transition: transform 0.2s, filter 0.2s;
+            }
+            .fw-pin-${idx}:hover {
+              transform: scale(1.15);
+              filter: drop-shadow(0 4px 12px ${glowColor});
+            }
+            .fw-body-${idx} {
+              width: 36px;
+              height: 36px;
+              background: linear-gradient(145deg, ${primaryColor} 0%, ${secondaryColor} 100%);
+              border-radius: 50% 50% 50% 4px;
+              transform: rotate(-45deg);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border: 2.5px solid white;
+              position: relative;
+            }
+            .fw-icon-${idx} {
+              transform: rotate(45deg);
+              width: 18px;
+              height: 18px;
+              fill: white;
+            }
+            .fw-sparkle-${idx} {
+              position: absolute;
+              width: 46px;
+              height: 46px;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              pointer-events: none;
+            }
+            .fw-sparkle-${idx} .spark {
+              position: absolute;
+              width: 3px;
+              height: 3px;
+              background: ${primaryColor};
+              border-radius: 50%;
+              animation: fwSparkle-${idx} 1.5s ease-in-out infinite;
+            }
+            .fw-sparkle-${idx} .spark:nth-child(1) { top: 0; left: 50%; animation-delay: 0s; }
+            .fw-sparkle-${idx} .spark:nth-child(2) { top: 15%; right: 0; animation-delay: 0.3s; }
+            .fw-sparkle-${idx} .spark:nth-child(3) { bottom: 15%; right: 0; animation-delay: 0.6s; }
+            .fw-sparkle-${idx} .spark:nth-child(4) { bottom: 0; left: 50%; animation-delay: 0.9s; }
+            .fw-sparkle-${idx} .spark:nth-child(5) { bottom: 15%; left: 0; animation-delay: 0.4s; }
+            .fw-sparkle-${idx} .spark:nth-child(6) { top: 15%; left: 0; animation-delay: 0.7s; }
+            @keyframes fwSparkle-${idx} {
+              0%, 100% { opacity: 0; transform: scale(0); }
+              50% { opacity: 1; transform: scale(1.5); }
+            }
+            .fw-type-${idx} {
+              position: absolute;
+              top: -6px;
+              right: -6px;
+              width: 16px;
+              height: 16px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 9px;
+              border: 1.5px solid white;
+              background: ${isHigh ? '#D62828' : '#FF8C00'};
+              color: white;
+              font-weight: 700;
+            }
+          </style>
+          <div class="fw-pin-${idx}">
+            <div class="fw-sparkle-${idx}">
+              <div class="spark"></div><div class="spark"></div><div class="spark"></div>
+              <div class="spark"></div><div class="spark"></div><div class="spark"></div>
+            </div>
+            <div class="fw-body-${idx}">
+              <svg class="fw-icon-${idx}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="fill: #FFD700;">
+                <path d="M12 2L9.5 9H2L8 13.5L5.5 21L12 16L18.5 21L16 13.5L22 9H14.5L12 2Z"/>
+              </svg>
+            </div>
+            <div class="fw-type-${idx}">${isHigh ? '↑' : '↓'}</div>
+          </div>
+        `;
+
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          onFireworkSelect?.(fw);
+          mapRef.current?.flyTo({
+            center: [fw.location.lng, fw.location.lat],
+            zoom: 15,
+            speed: 1.2,
+          });
+        });
+      } else {
+        // Firework cluster marker - hiển thị số lượng
+        el.className = 'firework-cluster';
+        
+        // Size based on count
+        const size = Math.min(55, 32 + cluster.count * 2);
+        
+        el.innerHTML = `
+          <style>
+            .fw-cluster-${idx} {
+              width: ${size}px;
+              height: ${size}px;
+              background: linear-gradient(145deg, #FF9D1C 0%, #FF6B35 100%);
+              border-radius: 50%;
+              border: 3px solid white;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              box-shadow: 0 3px 10px rgba(255, 107, 53, 0.5);
+              transition: transform 0.2s;
+            }
+            .fw-cluster-${idx}:hover {
+              transform: scale(1.1);
+            }
+            .fw-cluster-count-${idx} {
+              color: white;
+              font-weight: bold;
+              font-size: ${Math.min(18, 12 + cluster.count)}px;
+              text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            }
+          </style>
+          <div class="fw-cluster-${idx}">
+            <span class="fw-cluster-count-${idx}">${cluster.count}</span>
+          </div>
+        `;
+
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Zoom into cluster
+          mapRef.current?.flyTo({
+            center: [cluster.lng, cluster.lat],
+            zoom: Math.min(currentZoom + 2, 16),
+            speed: 1.2,
+          });
+        });
+      }
+
+      const marker = new goongjs.Marker({ element: el, anchor: 'center' })
+        .setLngLat([cluster.lng, cluster.lat])
+        .addTo(mapRef.current!);
+
+      fireworkMarkersRef.current.push(marker);
+    });
+  }, [fireworks, festivalMode, mapLoaded, currentZoom, createFireworkClusters, onFireworkSelect]);
 
   // Update Route Polyline
   useEffect(() => {

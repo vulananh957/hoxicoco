@@ -72,6 +72,7 @@ export const getDetailedRoute = async (
 ): Promise<NavigationRoute | null> => {
   try {
     // Request với steps=true để lấy chi tiết từng bước
+    // Sử dụng vehicle=bike - Goong API hỗ trợ tốt hơn với bike so với walk
     const url = `https://rsapi.goong.io/Direction?origin=${start.lat},${start.lng}&destination=${end.lat},${end.lng}&vehicle=bike&api_key=${GOONG_API_KEY}`;
     
     const response = await fetch(url);

@@ -20,6 +20,7 @@ import PendingApproval from './apps/Admin/pages/PendingApproval';
 import ReportCenter from './apps/Admin/pages/ReportCenter';
 import UserManagement from './apps/Admin/pages/UserManagement';
 import Posts from './apps/Admin/pages/Posts';
+import FireworkManagement from './apps/Admin/pages/FireworkManagement';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -78,6 +79,7 @@ const App: React.FC = () => {
           <Route path="pending" element={<PendingApproval />} />
           <Route path="reports" element={<ReportCenter />} />
           <Route path="users" element={<UserManagement />} />
+          <Route path="fireworks" element={<FireworkManagement />} />
         </Route>
 
         {/* Client Routes (User thường) */}

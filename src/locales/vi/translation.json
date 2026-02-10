@@ -52,9 +52,11 @@
     "account": "Tài khoản",
     "share": "Chia sẻ ứng dụng",
     "feedback": "Góp ý & Phản hồi",
+    "privacy": "Quyền riêng tư & Pháp lý",
     "support": "Liên hệ hỗ trợ",
     "logout": "Đăng xuất",
-    "loginPrompt": "Đăng nhập để sử dụng đầy đủ tính năng"
+    "loginPrompt": "Đăng nhập để sử dụng đầy đủ tính năng",
+    "followUs": "Theo dõi chúng tôi"
   },
   "game": {
     "title": "Toilet Rush",
@@ -197,6 +199,22 @@
     "comments": "bình luận",
     "title": "Cộng đồng",
     "developing": "Tính năng đang được phát triển..."
+  },
+  "festival": {
+    "mode": "Chế độ Lễ hội",
+    "highAlt": "Tầm cao",
+    "lowAlt": "Tầm thấp",
+    "date": "Ngày",
+    "time": "Giờ",
+    "duration": "Thời lượng",
+    "minutes": "phút",
+    "address": "Địa chỉ",
+    "description": "Mô tả",
+    "upcoming": "Sắp diễn ra",
+    "active": "Đang diễn ra",
+    "ended": "Đã kết thúc",
+    "directions": "Chỉ đường đến đây",
+    "points": "điểm"
   },
   "appInfo": {
     "title": "Hoxicoco - Tìm nhà vệ sinh",

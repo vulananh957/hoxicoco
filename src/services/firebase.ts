@@ -23,8 +23,9 @@ import {
   User
 } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { Toilet, Review } from '../types';
+import { Toilet, Review, FireworkLocation } from '../types';
 import { MOCK_TOILETS, DEFAULT_ADMIN_EMAILS } from '../constants';
+import { getFireworkStatus } from '../utils/fireworkUtils';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -1289,5 +1290,129 @@ export const addMultipleToiletsAdmin = async (
         error: 'Batch operation failed'
       }))
     };
+  }
+};
+
+// ==================== FIREWORK / FESTIVAL MODE ====================
+
+// Subscribe to firework locations (realtime)
+export const subscribeToFireworks = (callback: (fireworks: FireworkLocation[]) => void) => {
+  const fireworksRef = collection(db, 'fireworks');
+  const q = query(fireworksRef, orderBy('district'));
+
+  return onSnapshot(q, (snapshot) => {
+    const fireworks: FireworkLocation[] = snapshot.docs.map(doc => {
+      const data = doc.data();
+      const date = data.date || '';
+      const time = data.time || '00:00';
+      
+      // Calculate status dynamically based on current time
+      const calculatedStatus = getFireworkStatus(date, time);
+      
+      return {
+        id: doc.id,
+        name: data.name || '',
+        location: {
+          lat: data.location?.latitude || data.location?.lat || 0,
+          lng: data.location?.longitude || data.location?.lng || 0
+        },
+        address: data.address || '',
+        district: data.district || '',
+        date: date,
+        time: time,
+        duration: data.duration || 15,
+        type: data.type || 'high',
+        description: data.description || '',
+        images: data.images || [],
+        status: calculatedStatus, // Override with calculated status
+        created_at: data.created_at?.toMillis?.() || Date.now()
+      };
+    });
+    callback(fireworks);
+  });
+};
+
+// Fetch all firework locations (one-time)
+export const fetchAllFireworks = async (): Promise<FireworkLocation[]> => {
+  try {
+    const fireworksRef = collection(db, 'fireworks');
+    const q = query(fireworksRef, orderBy('district'));
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map(doc => {
+      const data = doc.data();
+      const date = data.date || '';
+      const time = data.time || '00:00';
+      
+      // Calculate status dynamically based on current time
+      const calculatedStatus = getFireworkStatus(date, time);
+      
+      return {
+        id: doc.id,
+        name: data.name || '',
+        location: {
+          lat: data.location?.latitude || data.location?.lat || 0,
+          lng: data.location?.longitude || data.location?.lng || 0
+        },
+        address: data.address || '',
+        district: data.district || '',
+        date: date,
+        time: time,
+        duration: data.duration || 15,
+        type: data.type || 'high',
+        description: data.description || '',
+        images: data.images || [],
+        status: calculatedStatus, // Override with calculated status
+        created_at: data.created_at?.toMillis?.() || Date.now()
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching fireworks:', error);
+    return [];
+  }
+};
+
+// Add a firework location
+export const addFirework = async (firework: Omit<FireworkLocation, 'id' | 'created_at'>): Promise<string | null> => {
+  try {
+    const docRef = await addDoc(collection(db, 'fireworks'), {
+      ...firework,
+      location: new FirestoreGeoPoint(firework.location.lat, firework.location.lng),
+      created_at: Timestamp.now()
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error('Error adding firework:', error);
+    return null;
+  }
+};
+
+// Update a firework location
+export const updateFirework = async (id: string, data: Partial<FireworkLocation>): Promise<boolean> => {
+  try {
+    console.log('Updating firework', id, 'with data:', data);
+    const updateData: any = { ...data };
+    if (data.location) {
+      updateData.location = new FirestoreGeoPoint(data.location.lat, data.location.lng);
+    }
+    delete updateData.id;
+    delete updateData.created_at;
+    await updateDoc(doc(db, 'fireworks', id), updateData);
+    console.log('Firework updated successfully');
+    return true;
+  } catch (error) {
+    console.error('Error updating firework:', error);
+    return false;
+  }
+};
+
+// Delete a firework location
+export const deleteFirework = async (id: string): Promise<boolean> => {
+  try {
+    await deleteDoc(doc(db, 'fireworks', id));
+    return true;
+  } catch (error) {
+    console.error('Error deleting firework:', error);
+    return false;
   }
 };

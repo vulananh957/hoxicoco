@@ -51,9 +51,11 @@
     "account": "账户",
     "share": "分享应用",
     "feedback": "反馈",
+    "privacy": "隐私和法律条款",
     "support": "联系客服",
     "logout": "退出登录",
-    "loginPrompt": "登录以使用全部功能"
+    "loginPrompt": "登录以使用全部功能",
+    "followUs": "关注我们"
   },
   "game": {
     "title": "厕所冲刺",
@@ -194,6 +196,22 @@
     "comments": "条评论",
     "title": "社区",
     "developing": "功能开发中..."
+  },
+  "festival": {
+    "mode": "节日模式",
+    "highAlt": "高空",
+    "lowAlt": "低空",
+    "date": "日期",
+    "time": "时间",
+    "duration": "时长",
+    "minutes": "分钟",
+    "address": "地址",
+    "description": "描述",
+    "upcoming": "即将举行",
+    "active": "进行中",
+    "ended": "已结束",
+    "directions": "导航到这里",
+    "points": "个地点"
   },
   "appInfo": {
     "title": "Hoxicoco - 找厕所",

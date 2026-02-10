@@ -177,7 +177,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ isOpen, onClose, currentUser, onSig
               <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
                 <i className="ri-shield-check-line text-base text-primary"></i>
               </div>
-              <span className="font-medium text-heading text-sm">Privacy & Legal</span>
+              <span className="font-medium text-heading text-sm">{t('menu.privacy')}</span>
             </button>
 
             <button
@@ -191,7 +191,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ isOpen, onClose, currentUser, onSig
             </button>
 
             <button
-              onClick={() => window.open('mailto:support@hoxicoco.com', '_blank')}
+              onClick={() => window.open('mailto:al.squared.la@gmail.com', '_blank')}
               className="w-full flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-gray-50 transition-colors"
             >
               <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
@@ -220,8 +220,39 @@ const UserMenu: React.FC<UserMenuProps> = ({ isOpen, onClose, currentUser, onSig
             </div>
           )}
 
+          {/* Social Media Links */}
+          <div className="pt-3 border-t border-gray-100 mb-3">
+            <p className="text-[10px] font-semibold text-gray-400 uppercase mb-3 text-center">{t('menu.followUs')}</p>
+            <div className="flex justify-center gap-3.5">
+              <a 
+                href="https://www.facebook.com/profile.php?id=61587522062791" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-blue-100 hover:bg-blue-200 flex items-center justify-center transition-all duration-200 hover:scale-110 text-blue-600"
+              >
+                <i className="ri-facebook-fill text-lg"></i>
+              </a>
+              <a 
+                href="https://www.tiktok.com/@hoxicoco.official" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-700 flex items-center justify-center transition-all duration-200 hover:scale-110 text-white"
+              >
+                <i className="ri-tiktok-fill text-lg"></i>
+              </a>
+              <a 
+                href="https://www.instagram.com/hoxicoco.team/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-pink-600 hover:via-red-600 hover:to-yellow-600 flex items-center justify-center transition-all duration-200 hover:scale-110 text-white"
+              >
+                <i className="ri-instagram-fill text-lg"></i>
+              </a>
+            </div>
+          </div>
+
           {/* App Info */}
-          <div className="pt-3 border-t border-gray-100 text-center">
+          <div className="pt-2 border-t border-gray-100 text-center">
             <p className="text-[10px] text-gray-400">Hoxicoco v1.0.0</p>
             <p className="text-[10px] text-gray-400 mt-0.5">{t('appInfo.madeBy')}</p>
           </div>
