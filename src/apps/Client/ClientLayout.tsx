@@ -10,11 +10,12 @@ import BottomSheet from './components/UI/BottomSheet';
 import ReportModal from './components/UI/ReportModal';
 import Toast from './components/UI/Toast';
 import AddToiletForm from './components/Forms/AddToiletForm';
+import FireworkBottomSheet from './components/UI/FireworkBottomSheet';
 
 // Services & Types
-import { subscribeToToilets, signInWithGoogle, logOut, onAuthChange, addReport, ReportType, checkIsAdmin } from '../../services/firebase';
+import { subscribeToToilets, signInWithGoogle, logOut, onAuthChange, addReport, ReportType, checkIsAdmin, subscribeToFireworks } from '../../services/firebase';
 import { getDetailedRoute } from '../../services/goongService';
-import { Toilet, FilterState, GeoPoint, NavigationState } from '../../types';
+import { Toilet, FilterState, GeoPoint, NavigationState, FireworkLocation } from '../../types';
 import { DEFAULT_VIEWPORT, isAdmin } from '../../constants';
 
 const ClientLayout: React.FC = () => {
@@ -23,6 +24,8 @@ const ClientLayout: React.FC = () => {
   // Core States
   const [toilets, setToilets] = useState<Toilet[]>([]);
   const [selectedToilet, setSelectedToilet] = useState<Toilet | null>(null);
+  const [fireworks, setFireworks] = useState<FireworkLocation[]>([]);
+  const [selectedFirework, setSelectedFirework] = useState<FireworkLocation | null>(null);
   const [userLocation, setUserLocation] = useState<GeoPoint | null>(null);
   const [mapCenter, setMapCenter] = useState<GeoPoint | null>(null);
   const [activeTab, setActiveTab] = useState<'map' | 'add' | 'community'>('map');
@@ -38,8 +41,18 @@ const ClientLayout: React.FC = () => {
   });
   const [radius, setRadius] = useState<number | null>(null); // Default: no radius filter (show all)
 
-  // Navigation State - Turn-by-turn
+  // Navigation State - Turn-by-turn (Toilet)
   const [navigationState, setNavigationState] = useState<NavigationState>({
+    isActive: false,
+    route: null,
+    currentStepIndex: 0,
+    distanceToNextStep: 0,
+    remainingDistance: 0,
+    remainingDuration: 0
+  });
+  
+  // Navigation State - Turn-by-turn (Firework)
+  const [fireworkNavigationState, setFireworkNavigationState] = useState<NavigationState>({
     isActive: false,
     route: null,
     currentStepIndex: 0,
@@ -115,6 +128,19 @@ const ClientLayout: React.FC = () => {
     // Subscribe to realtime updates
     const unsubscribe = subscribeToToilets((data) => {
       setToilets(data);
+    });
+
+    // Cleanup subscription on unmount
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  // Fetch fireworks - with realtime updates
+  useEffect(() => {
+    // Subscribe to realtime updates
+    const unsubscribe = subscribeToFireworks((data) => {
+      setFireworks(data);
     });
 
     // Cleanup subscription on unmount
@@ -226,6 +252,64 @@ const ClientLayout: React.FC = () => {
     
   }, [userLocation, navigationState.isActive, navigationState.route, navigationState.currentStepIndex, selectedToilet]);
 
+  // Update firework navigation state when user location changes during navigation
+  useEffect(() => {
+    if (!fireworkNavigationState.isActive || !fireworkNavigationState.route || !userLocation) return;
+
+    const { route, currentStepIndex } = fireworkNavigationState;
+    const currentStep = route.steps[currentStepIndex];
+    
+    if (!currentStep) return;
+
+    // Calculate distance to next step's end point
+    const distanceToStepEnd = calculateDistance(userLocation, currentStep.endLocation);
+    
+    // Threshold to consider step completed (20 meters)
+    const STEP_COMPLETION_THRESHOLD = 20;
+    
+    // Check if user has reached the end of current step
+    if (distanceToStepEnd < STEP_COMPLETION_THRESHOLD && currentStepIndex < route.steps.length - 1) {
+      // Move to next step
+      const nextIndex = currentStepIndex + 1;
+      const nextStep = route.steps[nextIndex];
+      
+      // Calculate remaining distance and duration
+      let remainingDist = 0;
+      let remainingDur = 0;
+      for (let i = nextIndex; i < route.steps.length; i++) {
+        remainingDist += route.steps[i].distance;
+        remainingDur += route.steps[i].duration;
+      }
+      
+      setFireworkNavigationState(prev => ({
+        ...prev,
+        currentStepIndex: nextIndex,
+        distanceToNextStep: nextStep.distance,
+        remainingDistance: remainingDist,
+        remainingDuration: remainingDur
+      }));
+      
+      // Show toast for next turn
+      if (nextStep.turnType !== 'straight' && nextStep.turnType !== 'depart') {
+        setToast({ message: nextStep.instruction, type: 'info' });
+      }
+    } else {
+      // Update distance to next step end
+      setFireworkNavigationState(prev => ({
+        ...prev,
+        distanceToNextStep: distanceToStepEnd
+      }));
+    }
+    
+    // Check if arrived at destination
+    if (currentStep.turnType === 'arrive' || 
+        (selectedFirework && calculateDistance(userLocation, selectedFirework.location) < 30)) {
+      setToast({ message: '🎉 Bạn đã đến pháo hoa!', type: 'success' });
+      // Don't auto-cancel, let user do it
+    }
+    
+  }, [userLocation, fireworkNavigationState.isActive, fireworkNavigationState.route, fireworkNavigationState.currentStepIndex, selectedFirework]);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -267,6 +351,44 @@ const ClientLayout: React.FC = () => {
     
     return result;
   }, [toilets, filters, radius, userLocation]);
+
+  // Handle directions for firework - Start turn-by-turn navigation
+  const handleFireworkDirections = useCallback(async () => {
+    if (!selectedFirework || !userLocation) return;
+
+    const route = await getDetailedRoute(userLocation, selectedFirework.location);
+    if (route) {
+      // Start realtime tracking
+      startLocationTracking();
+      
+      // Initialize navigation state
+      setFireworkNavigationState({
+        isActive: true,
+        route,
+        currentStepIndex: 0,
+        distanceToNextStep: route.steps[0]?.distance || 0,
+        remainingDistance: route.totalDistance,
+        remainingDuration: route.totalDuration
+      });
+      
+      setToast({ message: 'Bắt đầu dẫn đường đến pháo hoa!', type: 'info' });
+    } else {
+      setToast({ message: 'Không thể tìm được đường đi', type: 'error' });
+    }
+  }, [selectedFirework, userLocation, startLocationTracking]);
+
+  // Cancel firework navigation
+  const handleCancelFireworkNavigation = useCallback(() => {
+    stopLocationTracking();
+    setFireworkNavigationState({
+      isActive: false,
+      route: null,
+      currentStepIndex: 0,
+      distanceToNextStep: 0,
+      remainingDistance: 0,
+      remainingDuration: 0
+    });
+  }, [stopLocationTracking]);
 
   // Handle directions - Start turn-by-turn navigation
   const handleDirections = useCallback(async () => {
@@ -451,6 +573,20 @@ const ClientLayout: React.FC = () => {
           userEmail={currentUser?.email || null}
           onReviewOpen={() => setHideBottomNav(true)}
           onReviewClose={() => setHideBottomNav(false)}
+        />
+      )}
+
+      {/* Firework Bottom Sheet */}
+      {selectedFirework && activeTab === 'map' && (
+        <FireworkBottomSheet
+          firework={selectedFirework}
+          onClose={() => {
+            setSelectedFirework(null);
+            handleCancelFireworkNavigation();
+          }}
+          onDirections={handleFireworkDirections}
+          onCancelNavigation={handleCancelFireworkNavigation}
+          navigationState={fireworkNavigationState}
         />
       )}
 
