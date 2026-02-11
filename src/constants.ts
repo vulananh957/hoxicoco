@@ -1,6 +1,6 @@
 // Goong API Keys
-export const GOONG_MAPTILES_KEY = '6TkRmHiSnQEE3IGjPAytQCUUyUNPa601YmMPn4Qu';
-export const GOONG_API_KEY = '2ogKs9Ji7SSrHwXdtdkzOJoBlibkgnFHav3e30RZ';
+export const GOONG_MAPTILES_KEY = 'KxqRoEXzFpFQzZblGr6tEXxql9grjmvI6FAEVW6B';
+export const GOONG_API_KEY = 'oBvhLYl2756bfTqHs64OKpHCHJdrWrusSr5RHJw2';
 
 // Default Admin Email List (always admin, cannot be removed)
 export const DEFAULT_ADMIN_EMAILS = [
