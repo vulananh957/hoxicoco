@@ -1,0 +1,27 @@
+{
+  "name": "Hoxicoco - Hệ sinh thái vệ sinh công cộng",
+  "short_name": "Hoxicoco",
+  "description": "Tìm kiếm nhà vệ sinh công cộng tại Việt Nam",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#CAF0F8",
+  "theme_color": "#00B4D8",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "lifestyle"],
+  "lang": "vi",
+  "dir": "ltr"
+}

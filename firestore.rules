@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Admins collection - authenticated users can read, write needs to be admin
+    // For initial setup, allow authenticated users to write
+    match /admins/{adminId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+    
+    // Toilets collection
+    match /toilets/{toiletId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update, delete: if isAuthenticated();
+    }
+    
+    // Reviews collection
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update, delete: if isAuthenticated();
+    }
+    
+    // Reports collection
+    match /reports/{reportId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update, delete: if isAuthenticated();
+    }
+    
+    // Posts collection (for blog/community posts)
+    match /posts/{postId} {
+      allow read: if true;  // Anyone can read posts
+      allow create: if isAuthenticated();  // Authenticated users can create
+      allow update, delete: if isAuthenticated();  // Authenticated users can update/delete
+    }
+    
+    // Comments collection (for post comments)
+    match /comments/{commentId} {
+      allow read: if true;  // Anyone can read comments
+      allow create: if isAuthenticated();  // Authenticated users can create comments
+      allow update, delete: if isAuthenticated() && (resource.data.userId == request.auth.uid);  // Users can only update/delete their own comments
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+    
+    // Fireworks collection (Festival Mode)
+    match /fireworks/{fireworkId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthenticated();
+    }
+  }
+}

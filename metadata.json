@@ -1,0 +1,7 @@
+{
+  "name": "Hoxicoco",
+  "description": "Hệ sinh thái vệ sinh công cộng thông minh - Sạch, Nhanh, Văn minh.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
