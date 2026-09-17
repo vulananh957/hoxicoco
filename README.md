@@ -1,18 +1,18 @@
-<div align="center">
-<img width="1200" height="475" alt="Hoxicoco" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Run and deploy your AI Studio app
 
-# Hoxicoco
+This contains everything you need to run your app locally.
 
-Ứng dụng web sử dụng Node.js và Gemini API.
+View your app in AI Studio: https://ai.studio/apps/drive/1WBkX0khxW38ZxluP-QJZX2yLg4kqkamO
 
-## Chạy dự án local
+## Run Locally
 
-**Yêu cầu:** Node.js
+**Prerequisites:**  Node.js
 
-1. Cài đặt các dependencies:
+
+1. Install dependencies:
    `npm install`
-2. Thêm API key Gemini vào file `.env.local`:
-   `GEMINI_API_KEY=your_gemini_api_key`
-3. Khởi động ứng dụng:
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
    `npm run dev`
+
+
